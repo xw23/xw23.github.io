@@ -1,0 +1,503 @@
+
+<html>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<style> circle {fill: lightblue; stroke: black;} </style>
+<body onload="init()">
+  
+<p>
+
+  <input class = "checkbox" type="checkbox" id="American" name="regions"  style="width:20;height:20; background-color:blue;" value="American" checked/> 
+  <label for="American" style="background-color:blue; font-size:20; color:white;">American</label>
+
+
+    <input type="checkbox" class = "checkbox" id="Asian" name="regions" style="width:20;height:20; background-color:yellow;" value="Asian" />
+  <label for="Asian" style="background-color:yellow;font-size:20; color:blue;">Asian</label>
+
+  <label style="background-color:red;"></label>
+  <input type="checkbox" class = "checkbox" id="European" name="regions" style="width:20;height:20; background-color:red;" value="European" checked />
+  <label for ="European" style="background-color:red; font-size:20; color:white;">European</label>
+ 
+</p>
+  <label style="background-color:white;"></label>
+  
+<svg width="500" height="500" style="background-color:lightblue">
+  
+<!--  <div id="viz"> -->
+  
+
+<!--  </div>   -->
+  
+  
+  
+  
+</svg>
+  
+  <p>
+  <button id = "2017" onclick = "openYear(2017)">2017</button>
+  <button id = "2018" onclick = "openYear('2018')">2018</button>
+  <button id = "2019" onclick = "openYear(2019)">2019</button>
+  </p>
+  
+<script>
+async function init() {
+
+  
+  document.getElementById("2017").style.backgroundColor='grey';
+  
+  
+//var data = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/cleaned_2017.csv");
+var data2017 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/BAR_2017.csv");
+var data2018 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/cleaned_2018.csv");
+var data2019 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/cleaned_2019.csv");
+  
+
+
+var data = data2017;
+  
+//  const nodata = ""
+ 
+  
+  var x = //d3.scaleLinear().domain([10, 200])
+    d3.scaleBand().domain(data.map(function(d) {return d.Make; }))
+.range([0,300])
+//.padding(0.2);        ///////////   for  ZOOM  original
+  
+//var x = d3.scaleSymlog().domain([150,10]).range([0, 200]);
+//var x = d3.scaleLog().domain([10,150]).range([200, 0]);
+                                /////     range([200, 0]), reversed
+  
+  
+  
+  
+  
+  
+var y = d3.scaleLinear().domain([0, d3.max(data, d => +d.NumOfModel)])//.domain([10, 150])//d3.extent(data, function(d) { return d.HwyMPG; }))
+                          ////////////////      +     SIGN  :   change  STRing  to  NUMERIC
+.range([300, 0])
+.nice()                ////    CUTOFF  VALUE  is  a  WHOLE
+;      ////////////   for  ZOOM  in  original
+//var y = d3.scaleLog().domain([10,150]).range([0, 200]);
+
+  
+var scaleX2 = //d3.scaleLinear().domain([10, 200])
+    d3.scaleBand().domain(data.map(function(d) {return d.Make; }))
+.range([0,300])      /////////   for  ZOOM  in  CHECKBOX  Click
+.padding(0.2);  
+  
+  
+var scaleY2 = d3.scaleLinear().domain([0, d3.max(data, d => +d.NumOfModel)])//.domain([0, 30])//.domain([10, 150])//d3.extent(data, function(d) { return d.HwyMPG; }))
+.range([300, 0])
+.nice()        ////    CUTOFF  VALUE  is  a  WHOLE
+;     /////////   for  ZOOM  in  CHECKBOX  Click
+                      ////////////////      +     SIGN  :   change  STRing  to  NUMERIC
+  
+  
+  /*
+  
+var x = d3.scaleBand().domain(d3.extent(data, function(d) { return d.Model; })).range([0, 400])//
+//var x = d3.scaleLinear().domain(d3.extent(data, function(d) { return d.CityMPG; })).range([300,0]);   
+//var x = d3.scaleLinear().domain([0, 150]).range([0,300]);        ///////////   for  ZOOM  original
+//var x = d3.scaleSymlog().domain([150,10]).range([0, 200]);
+//var x = d3.scaleLog().domain([10,150]).range([200, 0]);
+                                /////     range([200, 0]), reversed
+  
+var y = d3.scaleLinear().domain([0, 150]).range([150, 0]);      ////////////   for  ZOOM  in  original
+//var y = d3.scaleLog().domain([10,150]).range([0, 200]);
+  
+  
+var z = d3.scaleLinear().domain([150, 0]).range([150, 0]);      ////////////   for  ZOOM  in  original
+ 
+  
+var scaleX2 = d3.scaleLinear().domain([0, 150]).range([0,300]);      /////////   for  ZOOM  in  CHECKBOX  Click
+var scaleY2 = d3.scaleLinear().domain([0, 150]).range([300, 0]);     /////////   for  ZOOM  in  CHECKBOX  Click
+  */
+  
+  
+ ///////////////--------------------------AXIS--------------------------------------------------
+  
+  
+  
+
+//d3.select("body").selectAll("p").data(data).enter().append("p").html(function(d,i) {return d.Make + d.Fuel + d.AverageCityMPG});
+
+
+d3.select("svg")
+.append("g")
+.attr("id", "xAxis")
+  .attr("transform", "translate(50,350)")
+.call(d3.axisBottom(x).ticks()//tickValues([10,20,50,100])    //////   .tickValues([,])  is IN  CALL()  After axisLeft()
+//.tickFormat(d3.format(""))             #####    NO Working  for  NON - NUMERIC
+)  
+  
+        d3.selectAll("text")  
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-65)")
+  .attr("font-size", 8)
+//////////   tickFormat(d3.format(""))  show  Numbers , NOT  1 + e 1
+             
+
+  
+  
+
+d3.select("svg")
+.append("g").
+attr("id", "yAxis")
+  .attr("transform", "translate(50,50)")
+.call(d3.axisLeft(y)
+      .ticks()
+      
+.tickSize(-300)             ///////////// -----------------    BENCH Mark  BAR s  ---------- 
+
+      
+      
+//.tickValues([10,20,50,100]).tickFormat(d3.format(""))
+)
+  
+.selectAll(".tick line").attr("stroke", "grey")   //////  ---------   BANCH  MARK  LINE ,  COLOR
+
+  
+;
+
+
+/*  
+d3.select("svg")
+.append("g").
+attr("id", "zAxis")
+  .attr("transform", "translate(50,200)")
+.call(d3.axisLeft(z).tickValues([10,20,50,100]).tickFormat(d3.format("")));
+
+*/  
+  
+  
+   //////////////////--------------------------TOOLTIP------------------------------------
+    
+d3.select('body')
+//d3.select('svg')
+.append('div')
+.attr('id', 'tooltip')
+.attr("class", "tooltip")    /////////// 
+//.style('left', 'py')
+//.style('top', 'px')
+.attr('style', 'position: absolute')//; opacity: 1;')  /// to show on SVG
+  ;
+  
+  
+  
+ ///////------------------------------------RECT---------------------------------------- 
+  
+     d3.select("svg")
+  .append("g").attr("transform", "translate(50, 50)")
+  //.selectAll('rect').data([4,8,15,16,23,42]).enter()
+  .append("rect")
+  .attr("class", "tooltip-container")  //////////////////
+  .attr("x", 15).attr("y", 15)
+  .attr("height", 30).attr("width", 30)
+  .attr("rx", 5).attr("ry", 35)
+  .attr("fill", "black");
+    
+  
+////////////////////////
+
+var colors = ["red", "yellow", "blue"];
+  
+  
+function set_color(region){
+    if (region == "European"){
+        return colors[0];}
+    if (region == "Asian"){
+        return colors[1];}
+    if (region == "American"){
+        return colors[2];}
+}
+
+
+d3.selectAll("checkbox").style("hight", "100")  //style("background-color", "red").style("font-size", "150")
+  
+
+
+  
+  
+  ////////////////////////// --------------------------- POINT LABEL ------------------------------------------
+  
+/*  
+   d3.select("svg")
+.append("g").attr("transform", "translate(50,50)")
+.selectAll("text").data(data).enter().append("text").text(function(d){return d.Make + d.Model})
+     .attr("x", function(d){return d.CityMPG}).attr("y", function(d){return d.HwyMPG})
+  .attr("text-anchor", "middle")
+  .attr("font-color", "black")//.attr("stroke", "grey")
+  .attr("font-size", 7);
+ */ 
+  
+function update1(){
+  
+   
+//  d3.select("svg").call(zoom)   //////////////////////   ???????????????
+  
+  
+  /////////////////////----------------------------------------------------------------
+  
+  
+  d3.selectAll(".checkbox")
+    .each(function(d){
+    
+       cb = d3.select(this);
+       //grp = cb.property("value");
+    
+       
+       newData = data.filter(function(d){return d.Region == cb.property("id")})
+
+    
+       if (cb.property("checked") ){
+         
+         
+         
+
+         
+         d3.select("svg")
+.append("g")
+.attr("transform", "translate(50,50)")
+         
+.selectAll("rect").data(newData).enter().append("rect")
+
+.attr("class", function(d) {return d.Region;})   
+                   ////////  CLASS  for  SELECTION , in REMOVE 
+   
+         ///////////    .selectAll("\." + cb.property("id"))
+
+         
+//.attr("cx", function(d){return newXScale(d.CityMPG)})
+//.attr("cy", function(d){return newYScale(d.HwyMPG)})
+         
+.attr("x", function(d){return scaleX2(d.Make);})//function(d, i) {return i * 10;})      /////////   for  ZOOM  in  CHECKBOX  Click
+// .attr("x", function(d) {return scaleX2(d.Manufacturer); })  
+         ///  CX & y: big to small,  CY & x : small to big
+.attr("y", function(d){return scaleY2(d.NumOfModel);} )//function(d, i) {return d.HwyMPG;})      //////////   for  ZOOM  in  CHECKBOX  Click
+                       ///  CX & y: big to small,  CY & x : small to big
+  
+.attr("width", scaleX2.bandwidth())       /////      function(d, i) {return Number(d.Cyl) * 2;})
+               //////////////  ----------------------    . BANDWIDTH()    auto calculated         
+//.attr("width", 10)//scaleX2(5))         
+         
+///.attr("r", function(d, i) {return Number(d.Cyl) + 2.0;});
+                     /////////    PARSEINT ( )  or   Number ( )
+  
+.attr("height", function(d, i){return 300 - scaleY2(d.NumOfModel);})
+       /////////////////////    RETURN   a  FUNCTION
+         
+.style("fill", function(d){return set_color(d.Region)})      
+         
+         
+  
+  .on('mouseover', function(d) {
+  d3.select('#tooltip').       /////  Select('#TOOLTIP')   :  TEXT
+style('opacity', 1)
+  .text(d.Make + " : " + d.NumOfModel + " models")
+
+    .style("font-size", 13)
+  .style("left",(event.pageX + 10)).style("top",(event.pageY + 10))
+   .style("background", "white")        ////////////
+   .style("border-radius", "18")
+  .style("border", "solid")
+    .style("border-width", 1.5)
+  
+ d3.select(this)             /////  Select(THIS)   :    CIRCLE
+      .style("stroke", "black").style("fill", "white")
+})
+.on('mouseout', function(d) {
+  d3.select('#tooltip').style('opacity', 0).text("")
+  d3.select(this)//.style('opacity', 1)
+      .style("fill", function(d){return set_color(d.Region)})//.text(d.Make + " " + d.Model)
+})
+//.on('mousemove', function(d) {d3.select('#tooltip').transition().duration(200).style('opacity', 1).text("B")})
+
+.on("click", function () {
+  window.open("new.html")
+})  
+
+    
+         
+         
+////////////////////////////////////////------------------------- POINT LABEL ---------------------------------------
+         
+
+d3.select("svg")
+.append("g").attr("transform", "translate(50,50)")
+.selectAll("text").data(newData).enter()
+.append("text").text(function(d){return d.NumOfModel;})
+
+.attr("class", function(d) {return d.Region;})         ////////  CLASS  for  SELECTION , in REMOVE 
+                ///////////    .selectAll("circle." + cb.property("id"))
+         
+.attr("id", "textLabel")                         //////////////      for  RESIZE  SELECTION  in  ZOOM
+         
+//     .attr("x", 100)//function(d, i){return i * 10})
+//      .attr("y", 100)//function(d){return 400 - d.HwyMPG + 20;})
+               
+.attr("x", function(d){return scaleX2(d.Make);})                  
+.attr("y", function(d){return scaleY2(d.NumOfModel) - 10;})
+  
+         
+  //.attr("text-anchor", "middle")
+  //.attr("font-color", "grey")//.attr("stroke", "grey")
+         
+  //.attr("transform", "rotate(90)")      //////////   WRONG ,   ROTATE  entire  as  a  ROW     
+
+  .attr("fill", "black")
+  .attr("font-size", 10);
+     
+         
+                     //////////////      for  RESIZE  SELECTION  in  ZOOM
+ 
+
+         
+         
+         
+         
+         
+         
+}
+    
+    else
+      
+    {
+        d3.select("svg").selectAll("rect." + cb.property("id")).remove(); 
+        d3.select("svg").selectAll("text." + cb.property("id")).remove();
+         /////////////   .selectAll("circle." + cb.property("id"))   ,  by CLASS 
+    }
+    
+   // d3.select("svg").call(zoom)   //////////////////////   ???????????????
+  
+  })
+    
+}
+
+      
+  
+  d3.selectAll(".checkbox").on("change",update1);
+  
+  update1();    /////////  so when page is loaded, CIRCLES SHOW as Box CHECKed
+    
+  
+  
+/////////////-------------------------   NO   ZOOOM  any  more---------------------------------
+  
+
+
+  
+///////////////// ----------------------------RECT---------------------------------------  
+  
+  
+  
+d3.select("svg")
+  .append("g").attr("transform", "translate(50, 50)")
+  //.selectAll('rect').data([4,8,15,16,23,42]).enter()
+  .append("rect")
+  .attr("class", "tooltip-container")  //////////////////
+  .attr("x", 15).attr("y", 15)
+  .attr("height", 30).attr("width", 30)
+  .attr("rx", 5).attr("ry", 35)
+  .attr("fill", "red");
+  
+  
+ /////////////////////////------------------------LABELS-------------------------------------------- 
+  
+d3.select("svg")
+  .append("text")
+  .attr("id", "title")
+  .text("2017 Model Count by Brand")
+  //.text(d3.extent(data.CityMPG))
+  //.text(data.CityMPG)
+  .attr("x", 200).attr("y", 30)
+  .attr("text-anchor", "middle")
+  .attr("fill", "orange").attr("stroke", "grey")
+  .attr("font-size", 25);
+  
+  
+
+  
+d3.select("svg")
+  .append("text")
+  .text("Number of Models")
+  
+  .attr("transform", "rotate(-90)")
+  
+  .attr("x", -200).attr("y", 20)
+  .attr("text-anchor", "middle")
+  .attr("fill", "black")//.attr("stroke", "black")
+  .attr("font-size", 15);
+  
+  
+d3.select("svg")
+  .append("text")
+  .text(data.Model)           ///////////////////////////////////////////////////////////////////
+  .attr("x", 200).attr("y", 385)
+  .attr("text-anchor", "middle")
+  .attr("fill", "black")//.attr("stroke", "black")
+  .attr("font-size", 15);
+  
+
+
+  
+  
+  ////////////////////////////////--------------------------- BUTTONS ----------------------------------------
+  
+  
+openYear = function(year){             /////////////////////////////////////
+
+  
+  
+  
+    //document.getElementById("2017").style.backgroundColor='lightgrey'
+  //document.getElementById("2018").style.backgroundColor='lightgrey'
+  //document.getElementById("2019").style.backgroundColor='lightgrey'
+  
+  d3.selectAll("button").style("background-color", "lightgrey")
+  
+  document.getElementById(year).style.backgroundColor='grey';      ///////  CHANGE  BACKGROUND  Color
+  
+
+  
+  ////d3.select("#2017").remove()                /////////////  
+  
+  
+   d3.select("svg")
+  .select("#title")
+  .text(year + "  Model Count by Brand")
+  .attr("x", 200).attr("y", 30)
+  .attr("text-anchor", "middle")
+  .attr("fill", "orange").attr("stroke", "grey")
+  .attr("font-size", 25);
+  
+  
+  data = eval('data' + year);                ////////////     DYNAMIC  Varibles  ,  use   EVAL ( )
+        //  window['data' + year];     ///  NOT  Working !!  ONLY  for  ASSIGNMENT ??  NOT  REtrival ??
+  
+  d3.select("svg").selectAll("rect").remove()          /////////   REMOVE  EXISTing  circles,  
+                                                       /////////  or will  append new to old
+  
+  d3.select("svg").selectAll("#textLabel").remove()
+  
+  update1();                     ////////////    APPEND  NEW circles  in a  circle - FREE  CLEAN  sheet
+  
+  
+}
+  
+
+ 
+  
+  
+  
+}
+  
+  
+  
+  
+  
+</script>
+</body>
+</html>
+
+
