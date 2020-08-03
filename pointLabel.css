@@ -1,0 +1,50 @@
+
+body {
+  background-color: white;
+}
+
+svg {
+  float: left;
+}
+
+button {
+  /*background-color: #4CAF50; /* Green */
+  border: none;
+  /*color: white;*/
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15;
+}
+
+checkbox{
+
+  
+}
+
+.tick text{
+  fill: grey;
+  
+}
+
+#textLabel {
+  max-width: 5;
+  height: 5;
+overflow: hidden;
+}
+
+span {float: right;}
+
+
+#checkBoxDiv{
+  
+   position: absolute;
+  top: 100;
+  right: 590;
+  width: 120px;
+  height: 150;
+  border: 3px solid #73AD21;
+  font-size: 15;
+
+}
