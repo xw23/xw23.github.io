@@ -92,7 +92,7 @@ async function init() {
   
     .append("rect").attr("id", "#RadiusBox")
     .attr("x", 0).attr("y", 0)
-  .attr("height", 75).attr("width", 150)
+  .attr("height", 81).attr("width", 150)
   //.attr("rx", 25).attr("ry", 35)
   .attr("fill", "#F0F8FF")
   .attr("stroke", "#73AD21")
@@ -109,20 +109,21 @@ async function init() {
     .attr("x", 17).attr("y", 0)
  
   .attr("stroke", "#73AD21")
-  .attr("stroke-width", 1.5)
+  .attr("stroke-width", 1.2)
   .style("opacity", 1)
+  .attr("font-size", 15)
   
   
   
   
   
     d3.select("#svg3").append("g")//.attr("id", "textBoxG")
-    .attr("transform", "translate(18, 460)").attr("id", "#RadiusBox")
+    .attr("transform", "translate(18, 457)").attr("id", "#RadiusBox")
   
-  .selectAll("circle").data([3,4,6]).enter().append("circle")
+  .selectAll("circle").data([2,3,4,6]).enter().append("circle")
   
  
-    .attr("cx", 10).attr("cy", function(d, i){return i * 18})
+    .attr("cx", 10).attr("cy", function(d, i){return i * 15})
   .attr("r", d => d + 0.5)
   //.attr("rx", 25).attr("ry", 35)
   .attr("fill", "#F0F8FF")
@@ -133,17 +134,18 @@ async function init() {
   
   
   d3.select("#svg3").append("g")//.attr("id", "textBoxG")
-    .attr("transform", "translate(18, 460)").attr("id", "#RadiusBox")
+    .attr("transform", "translate(18, 457)").attr("id", "#RadiusBox")
   
-  .selectAll("text").data([3,4,6]).enter().append("text")
+  .selectAll("text").data([2, 3,4,6]).enter().append("text")
   .text(d => d)
   
  
-    .attr("x", 25).attr("y", function(d, i){return i * 18 + 4})
+    .attr("x", 25).attr("y", function(d, i){return i * 15 + 4})
   
   .attr("stroke", "#73AD21")
-  .attr("stroke-width", 1.5)
+  .attr("stroke-width", 1.2)
   .style("opacity", 1)
+  .style("font-size", 15)
   
   
   
