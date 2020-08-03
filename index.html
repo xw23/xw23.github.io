@@ -13,7 +13,7 @@
 </p>
   
 <p>
-    <input type="checkbox" class = "checkbox" id="Asian" name="regions" style="width:20;height:20; background-color:yellow;" value="Asian" />
+    <input type="checkbox" class = "checkbox" id="Asian" name="regions" style="width:20;height:20; background-color:ffff00;" value="Asian" />
   <label for="Asian" style="background-color:yellow;font-size:20; color:blue;">Asian</label>
 </p>
   
@@ -70,15 +70,74 @@ async function init() {
   const margin  = 50
     
   var svg_1 = d3.select("body").append("svg").attr("id", "svg1").attr("x", 0).attr("y", 0).attr("height", svgHeight)
-  .attr("width", svgWidth).style("background-color", "#F0F8FF")
+  .attr("width", svgWidth).style("background-color", "#e6eeff")
   
     var svg_3 = d3.select("body").append("svg").attr("id", "svg3").attr("x", 0).attr("y", 0).attr("height", svgHeight)
-  .attr("width", 200).style("background-color", "#F0F8FF")
+  .attr("width", 200).style("background-color", "#e6eeff")
   
   var svg_2 = d3.select("body").append("svg").attr("id", "svg2").attr("x", 400).attr("y", 0).attr("height", svgHeight2 + 100)
-  .attr("width", svgWidth2).style("background-color", "#F0F8FF")
+  .attr("width", svgWidth2).style("background-color", "#e6eeff")
   
 
+  
+  
+  
+  
+  //////// --------------   ANNOTATION  for  Circle  &  RING  -------------------
+  
+  
+    d3.select("#svg3").append("g")//.attr("id", "textBoxG")
+    .attr("transform", "translate(10, 500)")
+  
+    .append("rect").attr("id", "#annotationBox")
+    .attr("x", 0).attr("y", 0)
+  .attr("height", 60).attr("width", 150)
+  //.attr("rx", 25).attr("ry", 35)
+  .attr("fill", "#F0F8FF")
+  .attr("stroke", "#73AD21")
+  .attr("stroke-width", 3)
+  .style("opacity", 1)
+  
+  
+  
+  
+    d3.select("#svg3").append("g")//.attr("id", "textBoxG")
+    .attr("transform", "translate(10, 500)")
+  
+  .append("circle").attr("cx", 20).attr("cy", 18).attr("r", 8)
+      .style("fill", "darkgrey")
+  .style("stroke", "black")
+  .style("stroke-width", 1.5)
+  
+  
+    d3.select("#svg3").append("g")//.attr("id", "textBoxG")
+    .attr("transform", "translate(10, 500)")
+  .append("circle").attr("cx", 20).attr("cy", 45).attr("r", 8)
+      .style("fill", "#F0F8FF")
+  .style("stroke", "grey")
+  .style("stroke-width", 5)
+  
+  
+        d3.select("#svg3").append("g")//.attr("id", "textBoxG")
+    .attr("transform", "translate(10, 500)")
+  .append("text").text("2-WD")
+      
+      .attr("x", 50).attr("y", 25).attr("font-size", 18)
+
+  .style("stroke", "grey")
+  
+  
+  
+  
+      d3.select("#svg3").append("g")//.attr("id", "textBoxG")
+    .attr("transform", "translate(10, 500)")
+  .append("text").text("4-WD")
+      
+      .attr("x", 50).attr("y", 50).attr("font-size", 18)
+
+  .style("stroke", "grey")
+  
+  
   
   
   /////////////////////////// -----------------------------  TEXT  BOX  -------------------------------
@@ -93,7 +152,7 @@ async function init() {
   .append("rect").attr("id", "#textBox")
   //.attr("x", svgWidth - 160).attr("y", 0)
   .attr("x", 0).attr("y", 0)
-  .attr("height", 300).attr("width", 180)
+  .attr("height", 230).attr("width", 180)
   .attr("rx", 25).attr("ry", 35)
   .attr("fill", "lightgrey")
   .style("opacity", 1)
