@@ -495,16 +495,26 @@ d3.select("#info").remove()
   var xAxis1 = d3.axisBottom(x1)
   var yAxis1 = d3.axisLeft(y1)
   
+  
+  
   var xAxisGroup1 = d3.select("#svg1")//.selectAll("g")//.selectAll("g")
   .select("#xAxis1")
   //.select("g")
-  .attr("transform", "translate(50,550)").call(xAxis1)
+  .attr("transform", "translate(50,550)").call(xAxis1
+                                               .tickSize(-(svgHeight - margin * 2)))     //////////  -------------    TICK SIZE ()
   
+  
+                        /////////////////  -----------------   TICK SIZE  ------------- RE - ASSIGN  -----------
+
   var yAxisGroup1 = d3.select("#svg1")//.selectAll("g")
   .select("#yAxis1")
   //.select("g")
-  .attr("transform", "translate(50,50)").call(yAxis1)
+  .attr("transform", "translate(50,50)").call(yAxis1
+                                          .tickSize(-(svgHeight - margin * 2)))     //////////  ----------------    TICK SIZE ()
   
+  
+d3.selectAll(".tick line").attr("stroke", "grey")      //////  ---------   BANCH  MARK  LINE ,  COLOR
+
   
   
   var zoom = d3.zoom()
@@ -587,44 +597,6 @@ xAxis1.scale(newXScale1)
     
     
     
-    
-    /*
-    d3.select("svg")
-      .selectAll("text.American")
-     .attr("x", function(d){return newXScale(d.CityMPG)})
-      .attr("y", function(d){return newYScale(d.HwyMPG) + 13})
-   
-    
-    
-      d3.select("svg")
-      .selectAll("text.Asian")
-     .attr("x", function(d){return newXScale(d.CityMPG)})
-      .attr("y", function(d){return newYScale(d.HwyMPG) + 13})
-   
-    
-    
-      d3.select("svg")
-      .selectAll("text.European")
-     .attr("x", function(d){return newXScale(d.CityMPG)})
-      .attr("y", function(d){return newYScale(d.HwyMPG) + 13})
-   */
-    
-    
-    
-//    d3.select("svg")
-//.append("g").attr("transform", "translate(50,50)").call(d3.axisLeft(x))
-//.call(xAxis)
-      
-    
-//        d3.select("svg")
-//.append("g").attr("transform", "translate(50,50)").call(d3.axisBottom(y))
-//.call(yAxis)
-    
-     // t = d3.event.transform()
-    
-   //   newXScale = t.rescaleX()
-    
-  
         
     d3.select("#svg1")
   .append("g").attr("transform", "translate(50, 50)")
@@ -650,6 +622,9 @@ xAxis1.scale(newXScale1)
 
   
   d3.select("svg").call(zoom) 
+  
+  
+  
   
   //d3.select("svg").call(d3.zoom())      ///////////  NOT  WORKING
   
