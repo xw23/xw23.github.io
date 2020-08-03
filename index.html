@@ -341,7 +341,7 @@ d3.select("#svg1")
       .tickSize(-500)
 )
 
-d3.selectAll(".tick line").attr("stroke", "#D3D3D3")   //////  ---------   BANCH  MARK  LINE ,  COLOR
+d3.selectAll(".tick line").attr("stroke", "lightblue")//#D3D3D3")   //////  ---------   BANCH  MARK  LINE ,  COLOR
 
   
   
@@ -700,7 +700,7 @@ d3.select("#info").remove()
                                           .tickSize(-(svgHeight - margin * 2)))     //////////  ----------------    TICK SIZE ()
   
   
-d3.selectAll(".tick line").attr("stroke", "grey")      //////  ---------   BANCH  MARK  LINE ,  COLOR
+d3.selectAll(".tick line").attr("stroke", "lightblue")//grey")      //////  ---------   BANCH  MARK  LINE ,  COLOR
 
   
   
@@ -746,11 +746,12 @@ xAxis1.scale(newXScale1)
  yAxis1.scale(newYScale1)
       
     
-    xAxisGroup1.call(xAxis1)
-    yAxisGroup1.call(yAxis1)
+    xAxisGroup1.call(xAxis1)//.tickSize(-(svgHeight - margin * 2)))
+    yAxisGroup1.call(yAxis1)//.tickSize(-(svgHeight - margin * 2)))
     
     
-    
+    d3.selectAll(".tick line").attr("stroke", "lightblue")//grey")      //////  ---------   BANCH  MARK  LINE ,  COLOR
+
     
     
     
