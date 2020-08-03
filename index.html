@@ -24,7 +24,7 @@
 <!--  <svg id="svg1" width="400" height="400" x="0" y="0" style="background-color:lightblue">   -->
   
   
-<div id="viz"> 
+<!-- <div id="viz"> -->
   
 
 <!--  </div>   -->
@@ -514,9 +514,11 @@ d3.select("#info").remove()
 
       
   
-  d3.selectAll(".checkbox").on("change",update1);
+  //////////////////// -----------------   see  UPDATE 3 ---------------
   
-  update1();    /////////  so when page is loaded, CIRCLES SHOW as Box CHECKed
+  // d3.selectAll(".checkbox").on("change",update1);
+  
+ // update1();    /////////  so when page is loaded, CIRCLES SHOW as Box CHECKed
     
   
   ///////////////////////////--------------------------- ZOOM ---------------------------------
@@ -556,14 +558,23 @@ d3.selectAll(".tick line").attr("stroke", "grey")      //////  ---------   BANCH
     
   
   //d3.zoom().on("zoom", function(){           /////////////////   NOT  WORKING
-      
+    
+    
+    
+    
   
-      d3.selectAll(".checkbox").on("change",update1);
-    
-  
-  update1();                          /////////  so when page is loaded, CIRCLES SHOW as Box CHECKed
+      d3.selectAll(".checkbox").on("change",update3);
     
     
+ //////////////////// -----------------   see  UPDATE 3 ---------------
+
+    
+  update3();            /////////  so when page is loaded, CIRCLES SHOW as Box CHECKed
+    
+
+//    d3.selectAll(".checkbox").on("change",update2);
+    
+//  update2();              /////////////////////     UPDATE  2 ,   needed
     
     
       var newXScale1 = d3.event.transform.rescaleX(x1)
@@ -641,6 +652,10 @@ xAxis1.scale(newXScale1)
     
     
     
+    
+    
+    //////////////////// -----------------   see  UPDATE 3 ---------------
+
     
 //d3.selectAll(".checkbox").on("change",update1);
   
@@ -841,9 +856,9 @@ openYear = function(year){             /////////////////////////////////////
   
   d3.select("svg").selectAll("#textLabel").remove()
   
-  update1();                     ////////////    APPEND  NEW circles  in a  circle - FREE  CLEAN  sheet
+  //update1();                     ////////////    APPEND  NEW circles  in a  circle - FREE  CLEAN  sheet
   
-  
+  update3();
 
   
  /////////////////////////////////////////////////////   SVG 2   YEAR---------------------------
@@ -865,7 +880,7 @@ openYear = function(year){             /////////////////////////////////////
   
   d3.select("#svg2").selectAll("#textLabel").remove()
   
-  update2();
+  //update2();
   
 }
   
@@ -1189,18 +1204,21 @@ d3.select("#svg2")
 
       
   
-  d3.selectAll(".checkbox").on("change",update2);
+
   
-  update2();    /////////  so when page is loaded, CIRCLES SHOW as Box CHECKed
+  function update3(){
+    update1();
+    update2();
+  }
+  
+  
+  //////////////////// -----------------   see  UPDATE 3 ---------------
+
+  
+    d3.selectAll(".checkbox").on("change",update3);
+  
+  update3();    /////////  so when page is loaded, CIRCLES SHOW as Box CHECKed
     
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
