@@ -58,12 +58,16 @@ async function init() {
   const svgWidth = 600
   const svgHeight = 600
   
+  const svgWidth2 = 500
+  const svgHeight2 = 500
+  
+  const margin  = 50
     
   var svg_1 = d3.select("body").append("svg").attr("id", "svg1").attr("x", 0).attr("y", 0).attr("height", svgHeight)
   .attr("width", svgWidth).style("background-color", "lightblue")
   
-  var svg_2 = d3.select("body").append("svg").attr("id", "svg2").attr("x", 400).attr("y", 0).attr("height", 400)
-  .attr("width", 400).style("background-color", "lightblue")
+  var svg_2 = d3.select("body").append("svg").attr("id", "svg2").attr("x", 400).attr("y", 0).attr("height", svgHeight2)
+  .attr("width", svgWidth2).style("background-color", "lightblue")
   
   
   /////////////////////////// -----------------------------  TEXT  BOX  -------------------------------
@@ -871,6 +875,8 @@ openYear = function(year){             /////////////////////////////////////
   
   
   
+  
+  
   //////////////////////   ---------------------------     SVG 2 ,   ChartSvg  -----------------------
   
   
@@ -878,8 +884,8 @@ openYear = function(year){             /////////////////////////////////////
   
     var x2 = //d3.scaleLinear().domain([10, 200])
     d3.scaleBand().domain(data2.map(function(d) {return d.Make; }))
-.range([0,300])
-//.padding(0.2);        ///////////   for  ZOOM  original
+.range([0,400])   //svgWidth2 - (margin * 2)])
+.padding(0.2);        ///////////   for  ZOOM  original
   
 //var x = d3.scaleSymlog().domain([150,10]).range([0, 200]);
 //var x = d3.scaleLog().domain([10,150]).range([200, 0]);
@@ -892,7 +898,7 @@ openYear = function(year){             /////////////////////////////////////
   
 var y2 = d3.scaleLinear().domain([0, d3.max(data2, d => +d.NumOfModel)])//.domain([10, 150])//d3.extent(data, function(d) { return d.HwyMPG; }))
                           ////////////////      +     SIGN  :   change  STRing  to  NUMERIC
-.range([300, 0])
+.range([400, 0])//svgHeight2 - (margin * 2), 0])
 .nice()                ////    CUTOFF  VALUE  is  a  WHOLE
 ;      ////////////   for  ZOOM  in  original
 //var y = d3.scaleLog().domain([10,150]).range([0, 200]);
@@ -912,7 +918,7 @@ var y2 = d3.scaleLinear().domain([0, d3.max(data2, d => +d.NumOfModel)])//.domai
 d3.select("#svg2")
 .append("g")
 .attr("id", "xAxis2")
-  .attr("transform", "translate(50,350)")
+  .attr("transform", "translate(50, 450)")
 .call(d3.axisBottom(x2).ticks()//tickValues([10,20,50,100])    //////   .tickValues([,])  is IN  CALL()  After axisLeft()
 //.tickFormat(d3.format(""))             #####    NO Working  for  NON - NUMERIC
 )  
@@ -921,7 +927,7 @@ d3.select("#svg2")
     .style("text-anchor", "end")
     .attr("dx", "-.8em")
     .attr("dy", ".15em")
-    .attr("transform", "rotate(-65)")
+    .attr("transform", "rotate(-55)")
   .attr("font-size", 10)
 //////////   tickFormat(d3.format(""))  show  Numbers , NOT  1 + e 1
              
@@ -936,7 +942,7 @@ attr("id", "yAxis2")
 .call(d3.axisLeft(y2)
       .ticks()
       
-.tickSize(-300)             ///////////// -----------------    BENCH Mark  BAR s  ---------- 
+.tickSize(-400)             ///////////// -----------------    BENCH Mark  BAR s  ---------- 
 
       
       
@@ -1004,12 +1010,13 @@ d3.select("#svg2")
   
   .attr("transform", "rotate(-90)")
   
-  .attr("x", -200).attr("y", 20)
+  .attr("x", -(svgHeight - 100) / 2).attr("y", 20)
   .attr("text-anchor", "middle")
   .attr("fill", "black")//.attr("stroke", "black")
-  .attr("font-size", 15);
+  .attr("font-size", 20);
   
   
+  /*
 d3.select("#svg2")
   .append("text")
   .text(data.Model)           ///////////////////////////////////////////////////////////////////
@@ -1017,6 +1024,8 @@ d3.select("#svg2")
   .attr("text-anchor", "middle")
   .attr("fill", "black")//.attr("stroke", "black")
   .attr("font-size", 15);
+  
+  */
   
   
   
@@ -1078,7 +1087,7 @@ d3.select("#svg2")
 ///.attr("r", function(d, i) {return Number(d.Cyl) + 2.0;});
                      /////////    PARSEINT ( )  or   Number ( )
   
-.attr("height", function(d, i){return 300 - y2(d.NumOfModel);})
+.attr("height", function(d, i){return svgHeight2 - margin * 2 - y2(d.NumOfModel);})
        /////////////////////    RETURN   a  FUNCTION
          
 .style("fill", function(d){return set_color(d.Region)})      
