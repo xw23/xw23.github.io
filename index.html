@@ -83,11 +83,78 @@ async function init() {
   
   
   
+  
+  //////// --------------   ANNOTATION  for  Radius  /   Cylinder  -------------------
+  
+  
+      d3.select("#svg3").append("g")//.attr("id", "textBoxG")
+    .attr("transform", "translate(10, 430)")
+  
+    .append("rect").attr("id", "#RadiusBox")
+    .attr("x", 0).attr("y", 0)
+  .attr("height", 75).attr("width", 150)
+  //.attr("rx", 25).attr("ry", 35)
+  .attr("fill", "#F0F8FF")
+  .attr("stroke", "#73AD21")
+  .attr("stroke-width", 3)
+  .style("opacity", 1)
+  
+  
+  
+  
+    d3.select("#svg3").append("g")//.attr("id", "textBoxG")
+    .attr("transform", "translate(10, 445)")
+  
+    .append("text").text("Num of Cylinders")
+    .attr("x", 17).attr("y", 0)
+ 
+  .attr("stroke", "#73AD21")
+  .attr("stroke-width", 1.5)
+  .style("opacity", 1)
+  
+  
+  
+  
+  
+    d3.select("#svg3").append("g")//.attr("id", "textBoxG")
+    .attr("transform", "translate(18, 460)").attr("id", "#RadiusBox")
+  
+  .selectAll("circle").data([3,4,6]).enter().append("circle")
+  
+ 
+    .attr("cx", 10).attr("cy", function(d, i){return i * 18})
+  .attr("r", d => d + 0.5)
+  //.attr("rx", 25).attr("ry", 35)
+  .attr("fill", "#F0F8FF")
+  .attr("stroke", "#73AD21")
+  .attr("stroke-width", 1.5)
+  .style("opacity", 1)
+  
+  
+  
+  d3.select("#svg3").append("g")//.attr("id", "textBoxG")
+    .attr("transform", "translate(18, 460)").attr("id", "#RadiusBox")
+  
+  .selectAll("text").data([3,4,6]).enter().append("text")
+  .text(d => d)
+  
+ 
+    .attr("x", 25).attr("y", function(d, i){return i * 18 + 4})
+  
+  .attr("stroke", "#73AD21")
+  .attr("stroke-width", 1.5)
+  .style("opacity", 1)
+  
+  
+  
+  
+  
+  
   //////// --------------   ANNOTATION  for  Circle  &  RING  -------------------
   
   
     d3.select("#svg3").append("g")//.attr("id", "textBoxG")
-    .attr("transform", "translate(10, 500)")
+    .attr("transform", "translate(10, 520)")
   
     .append("rect").attr("id", "#annotationBox")
     .attr("x", 0).attr("y", 0)
@@ -102,7 +169,7 @@ async function init() {
   
   
     d3.select("#svg3").append("g")//.attr("id", "textBoxG")
-    .attr("transform", "translate(10, 500)")
+    .attr("transform", "translate(10, 520)")
   
   .append("circle").attr("cx", 20).attr("cy", 18).attr("r", 8)
       .style("fill", "darkgrey")
@@ -111,7 +178,7 @@ async function init() {
   
   
     d3.select("#svg3").append("g")//.attr("id", "textBoxG")
-    .attr("transform", "translate(10, 500)")
+    .attr("transform", "translate(10, 520)")
   .append("circle").attr("cx", 20).attr("cy", 45).attr("r", 8)
       .style("fill", "#F0F8FF")
   .style("stroke", "grey")
@@ -119,7 +186,7 @@ async function init() {
   
   
         d3.select("#svg3").append("g")//.attr("id", "textBoxG")
-    .attr("transform", "translate(10, 500)")
+    .attr("transform", "translate(10, 520)")
   .append("text").text("2-WD")
       
       .attr("x", 50).attr("y", 25).attr("font-size", 18)
@@ -130,7 +197,7 @@ async function init() {
   
   
       d3.select("#svg3").append("g")//.attr("id", "textBoxG")
-    .attr("transform", "translate(10, 500)")
+    .attr("transform", "translate(10, 520)")
   .append("text").text("4-WD")
       
       .attr("x", 50).attr("y", 50).attr("font-size", 18)
@@ -144,7 +211,7 @@ async function init() {
            
            
   d3.select("#svg3").append("g")//.attr("id", "textBoxG")
-    .attr("transform", "translate(0, 230)")
+    .attr("transform", "translate(0, 190)")
    
   //var textBoxG = d3.select("#textBoxG")
   
@@ -163,7 +230,7 @@ async function init() {
    d3.select("#svg3")
    //textBoxG
   //  .attr("transform", "translate(10, 10)")
-.append("g").attr("transform", "translate(90, 260)")
+.append("g").attr("transform", "translate(90, 220)")
   .append("text").text("Model Details")
      //.attr("transform", "translate(10, 0)")
     //.attr("x", 75).attr("y", 45)
@@ -177,7 +244,7 @@ async function init() {
    d3.select("#svg3")
    //textBoxG
   //  .attr("transform", "translate(10, 10)")
-.append("g").attr("transform", "translate(100, 275)")
+.append("g").attr("transform", "translate(100, 235)")
   .append("text").text("--------------------------")
     //.attr("transform", "translate(0, 0)")
     .attr("x", 0).attr("y", 0)
@@ -447,7 +514,7 @@ d3.select("#svg1")
   
   d3.select("#svg3")
   .append("g")
-  .attr("transform", "translate(10, 300)")
+  .attr("transform", "translate(10, 260)")
      
   .append("text")
            
