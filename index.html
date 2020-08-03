@@ -21,9 +21,10 @@
 </p>
   <label style="background-color:white;"></label>
   
-<svg width="400" height="400" style="background-color:lightblue">
+<!--  <svg id="svg1" width="400" height="400" x="0" y="0" style="background-color:lightblue">   -->
   
-<!--  <div id="viz"> -->
+  
+<div id="viz"> 
   
 
 <!--  </div>   -->
@@ -31,8 +32,7 @@
   <rect id="textBox" value="WHF"></rect>
   
   
-</svg>
-  
+
   
   
   
@@ -53,16 +53,30 @@ async function init() {
   
   
   
+  //<svg id="svg1" width="400" height="400" x="0" y="0" style="background-color:lightblue"> 
+    
+  const svgWidth = 600
+  const svgHeight = 600
+  
+    
+  var svg_1 = d3.select("body").append("svg").attr("id", "svg1").attr("x", 0).attr("y", 0).attr("height", svgHeight)
+  .attr("width", svgWidth).style("background-color", "lightblue")
+  
+  var svg_2 = d3.select("body").append("svg").attr("id", "svg2").attr("x", 400).attr("y", 0).attr("height", 400)
+  .attr("width", 400).style("background-color", "lightblue")
   
   
   /////////////////////////// -----------------------------  TEXT  BOX  -------------------------------
            
            
-           
-      
-  d3.select("svg").select("#textBox")
-  .attr("x", 300).attr("y", 0)
-  .attr("height", 100).attr("width", 100)
+  d3.select("#svg1").append("g")//.attr("id", "textBoxG").attr("transform", "translate(450, 0)")
+   
+  //var textBoxG = d3.select("#textBoxG")
+  
+  
+  .append("rect").attr("id", "#textBox")
+  .attr("x", svgWidth - 160).attr("y", 0)
+  .attr("height", 200).attr("width", 130)
   //.attr("rx", 5).attr("ry", 35)
   .attr("fill", "pink")
   .style("opacity", 1)
@@ -70,19 +84,23 @@ async function init() {
    
   
   
-   d3.select("svg")
-  //.append("g")
+   d3.select("#svg1")
+   //textBoxG
     //.attr("transform", "translate(50, 10)")
-  .append("text").text("Model Detail")           
-    .attr("x", 350).attr("y", 20)
+
+  .append("text").text("Model Detail")
+    //.attr("transform", "translate(450, 0)")
+    .attr("x", svgWidth - 100).attr("y", 20)
     .style("fill", "black")
    .attr("text-anchor", "middle");
            
-    d3.select("svg")
-  //.append("g")
+    d3.select("#svg1")
+    //textBoxG
     //.attr("transform", "translate(50, 10)")
-  .append("text").text("-----------------")           
-    .attr("x", 350).attr("y", 35)
+
+  .append("text").text("-----------------")
+    //.attr("transform", "translate(450, 0)")
+    .attr("x", svgWidth - 100).attr("y", 35)
     .style("fill", "black")
    .attr("text-anchor", "middle");
            
@@ -101,63 +119,80 @@ var data = data2017;
  
   
   
+  
+  //var data = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/cleaned_2017.csv");
+var data20172 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/BAR_2017.csv");
+var data20182 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/cleaned_2018.csv");
+var data20192 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/cleaned_2019.csv");
+  
+
+
+var data2 = data20172;
+  
+  
+  
+  
+  
 var textSize = d3.scaleLog().domain([-100, 100]).range([1,200]);
   
   
-var x = d3.scaleLog()
+var x1 = d3.scaleLinear()
 .domain([d3.min(data, function(d) { return d.CityMPG; }), d3.max(data, function(d) { return d.CityMPG; })])
 //.domain([10,60])
-.range([0,300]);        ///////////   for  ZOOM  original
+.range([0,svgWidth - 100]);        ///////////   for  ZOOM  original
 //var x = d3.scaleSymlog().domain([150,10]).range([0, 200]);
 //var x = d3.scaleLog().domain([10,150]).range([200, 0]);
                                 /////     range([200, 0]), reversed
   
-var y = d3.scaleLog()//.domain(d3.extent(data, function(d) { return d.HwyMPG; }))     ////////////   for  ZOOM  in  original
+var y1 = d3.scaleLinear()//.domain(d3.extent(data, function(d) { return d.HwyMPG; }))     ////////////   for  ZOOM  in  original
 .domain([d3.min(data, function(d) { return d.HwyMPG; }), d3.max(data, function(d) { return d.HwyMPG; })]) ///////////   for  ZOOM  original
 //.domain([10,60])
-.range([300, 0]); 
+.range([svgHeight - 100, 0]); 
   //var y = d3.scaleLog().domain([10,150]).range([0, 200]);
 
   
-var scaleX2 = d3.scaleLog()//.domain(d3.extent(data, function(d) { return d.CityMPG; }))
+var scaleX2 = d3.scaleLinear()//.domain(d3.extent(data, function(d) { return d.CityMPG; }))
 .domain([d3.min(data, function(d) { return d.CityMPG; }), d3.max(data, function(d) { return d.CityMPG; })])      ///////////   for  ZOOM  original
 //.domain([10,60])
-.range([0,300]);      /////////   for  ZOOM  in  CHECKBOX  Click
+.range([0,svgWidth - 100]);      /////////   for  ZOOM  in  CHECKBOX  Click
   
-var scaleY2 = d3.scaleLog()//.domain(d3.extent(data, function(d) { return d.HwyMPG; }))
+var scaleY2 = d3.scaleLinear()//.domain(d3.extent(data, function(d) { return d.HwyMPG; }))
 .domain([d3.min(data, function(d) { return d.HwyMPG; }), d3.max(data, function(d) { return d.HwyMPG; })])      ///////////   for  ZOOM  original
 //.domain([10,60])
-.range([300, 0]);     /////////   for  ZOOM  in  CHECKBOX  Click
+.range([svgHeight - 100, 0]);     /////////   for  ZOOM  in  CHECKBOX  Click
   
   
   
  ///////////////--------------------------AXIS--------------------------------------------------
   
   
-  
+  console.log(svgHeight - 100)
 
 //d3.select("body").selectAll("p").data(data).enter().append("p").html(function(d,i) {return d.Make + d.Fuel + d.AverageCityMPG});
 
 
-d3.select("svg")
-.append("g").attr("id", "xAxis")
-  .attr("transform", "translate(50,250)")
-.call(d3.axisBottom(x).ticks()//tickValues([10,20,50,100])    //////   .tickValues([,])  is IN  CALL()  After axisLeft()
+d3.select("#svg1")
+.append("g").attr("id", "xAxis1")
+  .attr("transform", "translate(50, 550)")
+.call(d3.axisBottom(x1).ticks()//tickValues([10,20,50,100])    //////   .tickValues([,])  is IN  CALL()  After axisLeft()
 //.tickFormat(d3.format(""))
+      .tickSize(-500)
 );      
 //////////   tickFormat(d3.format(""))  show  Numbers , NOT  1 + e 1
-             
+          
+
 
   
-  
 
-d3.select("svg")
-.append("g").attr("id", "yAxis")
+d3.select("#svg1")
+.append("g").attr("id", "yAxis1")
   .attr("transform", "translate(50,50)")
-.call(d3.axisLeft(y).ticks()
+.call(d3.axisLeft(y1)//.ticks()
 //.tickValues([10,20,50,100]).tickFormat(d3.format(""))
-);
+      .tickSize(-500)
+)
 
+d3.selectAll(".tick line").attr("stroke", "grey")   //////  ---------   BANCH  MARK  LINE ,  COLOR
 
   
   
@@ -178,7 +213,7 @@ d3.select('body')
   
  ///////------------------------------------RECT---------------------------------------- 
   
-  d3.select("svg")
+  d3.select("#svg1")
   .append("g").attr("transform", "translate(50, 10)")
   //.selectAll('rect').data([4,8,15,16,23,42]).enter()
   .append("rect")
@@ -190,7 +225,7 @@ d3.select('body')
   
   
   
-  d3.select("svg")
+  d3.select("#svg1")
     .append("g").attr("transform", "translate(50, 10)")
   .append("text").text("WYF")
     .attr("x", 30).attr("y", 30)
@@ -219,17 +254,10 @@ d3.selectAll("checkbox").style("hight", "100")  //style("background-color", "red
 
   
   
-  ////////////////////////// --------------------------- POINT LABEL ------------------------------------------
   
-/*  
-   d3.select("svg")
-.append("g").attr("transform", "translate(50,50)")
-.selectAll("text").data(data).enter().append("text").text(function(d){return d.Make + d.Model})
-     .attr("x", function(d){return d.CityMPG}).attr("y", function(d){return d.HwyMPG})
-  .attr("text-anchor", "middle")
-  .attr("font-color", "black")//.attr("stroke", "grey")
-  .attr("font-size", 7);
- */ 
+  
+///////////////////////////   -----------------------------   UPDATE  1 --------------------------------------  
+
   
 function update1(){
   
@@ -256,7 +284,7 @@ function update1(){
          /////////////////////////////------------------------- POINT LABEL ---------------------------------------
          
 
-d3.select("svg")
+d3.select("#svg1")
 .append("g").attr("transform", "translate(50,50)")
 .selectAll("text").data(newData).enter()
   .append("text").text(function(d){return d.Make})// + " " + d.Model})
@@ -265,6 +293,8 @@ d3.select("svg")
                 ///////////    .selectAll("circle." + cb.property("id"))
          
 .attr("id", "textLabel")                         //////////////      for  RESIZE  SELECTION  in  ZOOM
+
+
          
      .attr("x", function(d){return scaleX2(d.CityMPG);})
       .attr("y", function(d){return scaleY2(d.HwyMPG) + 13;})
@@ -284,9 +314,11 @@ d3.select("svg")
          
          
          
-         d3.select("svg")
+d3.select("#svg1")
 .append("g").attr("transform", "translate(50,50)")
-.selectAll("circle").data(newData.filter(function(d){return d.Drive == "2WD"; })).enter().append("circle")
+
+//.selectAll("circle").data(newData.filter(function(d){return d.Drive == "2WD"; })).enter().append("circle")
+.selectAll("circle").data(newData).enter().append("circle")
 
 .attr("class", function(d) {return d.Region;})   
                    ////////  CLASS  for  SELECTION , in REMOVE 
@@ -294,6 +326,8 @@ d3.select("svg")
          
 //.attr("cx", function(d){return newXScale(d.CityMPG)})
 //.attr("cy", function(d){return newYScale(d.HwyMPG)})
+         
+
          
 .attr("cx", function(d, i) {return scaleX2(d.CityMPG);})      /////////   for  ZOOM  in  CHECKBOX  Click
                        ///  CX & y: big to small,  CY & x : small to big
@@ -304,7 +338,24 @@ d3.select("svg")
 ///.attr("r", function(d, i) {return Number(d.Cyl) + 2.0;});
                      /////////    PARSEINT ( )  or   Number ( )
   
-.style("fill", function(d){return set_color(d.Region)})
+         
+        //////////////////   ------------------   use  FUCTION  to  SET   FILL ----------- 
+.style("fill", function(d){
+           if (d.Drive == "2WD") {return set_color(d.Region)}
+         else {return "grey"}}
+      )
+
+.style("stroke", function(d){
+           if (d.Drive == "2WD") {return "black"}
+           else {return set_color(d.Region)}})
+           
+.style("stroke-width", function(d){
+           if (d.Drive == "2WD"){return 1.5}
+           else {return 3.5}
+         })
+          
+         
+.style("opacity", 0.65)
        /////////////////////    RETURN   a  FUNCTION
 
   
@@ -320,7 +371,7 @@ d3.select("svg")
            
            
   
-  d3.select("svg")
+  d3.select("#svg1")
   //.append("g")
     //.attr("transform", "translate(50, 10)")
      
@@ -406,159 +457,17 @@ d3.select("#info").remove()
   window.open("new.html")
 })  
          
-           
-           
-         
-         
-         
-         
-           
-           
- 
-        ///////////////  ----------- SCATTER  POINTS  ---------  2  ------  RING  -----------------------------------
 
+}           
          
-         d3.select("svg")
-.append("g").attr("transform", "translate(50,50)")
-.selectAll("circle").data(newData.filter(function(d){return d.Drive == "4WD"; })).enter().append("circle")
-
-.attr("class", function(d) {return d.Region;})   
-                   ////////  CLASS  for  SELECTION , in REMOVE 
-                ///////////    .selectAll("circle." + cb.property("id"))
-         
-//.attr("cx", function(d){return newXScale(d.CityMPG)})
-//.attr("cy", function(d){return newYScale(d.HwyMPG)})
-         
-.attr("cx", function(d, i) {return scaleX2(d.CityMPG);})      /////////   for  ZOOM  in  CHECKBOX  Click
-                       ///  CX & y: big to small,  CY & x : small to big
-.attr("cy", function(d, i) {return scaleY2(d.HwyMPG);})      //////////   for  ZOOM  in  CHECKBOX  Click
-                       ///  CX & y: big to small,  CY & x : small to big
-      
-.attr("r", function(d, i) {return Number(d.Cyl) + 0.5;})
-///.attr("r", function(d, i) {return Number(d.Cyl) + 2.0;});
-                     /////////    PARSEINT ( )  or   Number ( )
-  
-.style("fill", "grey")//, function(d){return set_color(d.Region)})
-       /////////////////////    RETURN   a  FUNCTION
-
-  
-.style("stroke", function(d){return set_color(d.Region)})
-.style("stroke-width", 3.5)
-         
-  
-  .on('mouseover', function(d) {
-           
-           
-           
-             d3.select("svg")
-  //.append("g")
-    //.attr("transform", "translate(50, 10)")
-     
-  .append("text")
-           
-  .attr("dy", "0em") 
-           
-  .text(d.Make + " " + d.Model)    ///////  this is  INSIDE  a  function , D is already  DECLAREd          
-  .attr("x", 300).attr("y", 50)
-           
-           .attr("font-size", 10)           //////----------   CONTROLS  ALL
-            .attr("id", "info")
-            .style("fill", "black")
-            .attr("text-anchor", "left")
-   
-           
-  .append("tspan")           ////////////////    TSPAN     different  lineS
-  .attr("dy", "3em") 
-  .text("City MPG: " + d.CityMPG)
-  .attr("x", 300).attr("y", 50)
-           
-       
-  .append("tspan")
-  .attr("dy", "1.5em") 
-  .text("Hwy MPG :" + d.HwyMPG)
-  //.attr("id", "info")
-   .attr("x", 300).attr("y", 50)
-           
-           
-           
-           
-           
-           
-           
-           
-  d3.select('#tooltip').       /////  Select('#TOOLTIP')   :  TEXT
-style('opacity', 1)
-.text(d.Make + " " + d.Model + " , City MPG: " + d.CityMPG + ", Hwy MPG :" + d.HwyMPG)
-/*
-.text(d.Make + " " + d.Model + `
- City MPG: ` + d.CityMPG + `
- Hwy MPG :` + d.HwyMPG)                    //////////////    NOT  Working
- */
-    
-
-    .style("font-size", 10)
-  .style("left",(event.pageX + 10)).style("top",(event.pageY + 10))
-   .style("background", "white")        ////////////
-   .style("border-radius", "18")
-  .style("border", "solid")
-    .style("border-width", 1.5)
-          
-           
-           
-  
- d3.select(this)             /////  Select(THIS)   :    CIRCLE
-      .style("stroke", "black").style("fill", "white")
-           
-                 
-           
-           
-/////////////////////  ------------------------------  TEXT   BOX  ------------------------------------
-           
-           
-  
-
 
     
-           
-})
-.on('mouseout', function(d) {
-  d3.select('#tooltip').style('opacity', 0).text("")
-  d3.select(this)//.style('opacity', 1)
-      .style("fill", "grey")
-           
-      .style("stroke", function(d){return set_color(d.Region)})
-      .style("stroke-width", 3.5)
-           
-           
-           
-      
-           
-  /////////////////////////// -----------------------------  TEXT  BOX  -------------------------------
-
-d3//.select("svg")
-  .select("#textBox")
-           
-           
-d3.select("#info").remove()
-  // .style('opacity', 0)
- 
-              
-})
-//.on('mousemove', function(d) {d3.select('#tooltip').transition().duration(200).style('opacity', 1).text("B")})
-
-.on("click", function () {
-  window.open("new.html")
-})  
-
-         
-         
-}
     
     else
       
     {
-        d3.select("svg").selectAll("circle." + cb.property("id")).remove(); 
-        d3.select("svg").selectAll("text." + cb.property("id")).remove();
+        d3.select("#svg1").selectAll("circle." + cb.property("id")).remove(); 
+        d3.select("#svg1").selectAll("text." + cb.property("id")).remove();
          /////////////   .selectAll("circle." + cb.property("id"))   ,  by CLASS 
     }
     
@@ -579,18 +488,18 @@ d3.select("#info").remove()
   
 
    
-  var xAxis = d3.axisBottom(x)
-  var yAxis = d3.axisLeft(y)
+  var xAxis1 = d3.axisBottom(x1)
+  var yAxis1 = d3.axisLeft(y1)
   
-  var xAxisGroup = d3.select("svg")//.selectAll("g")//.selectAll("g")
-  .select("#xAxis")
+  var xAxisGroup1 = d3.select("#svg1")//.selectAll("g")//.selectAll("g")
+  .select("#xAxis1")
   //.select("g")
-  .attr("transform", "translate(50,350)").call(xAxis)
+  .attr("transform", "translate(50,550)").call(xAxis1)
   
-  var yAxisGroup = d3.select("svg")//.selectAll("g")
-  .select("#yAxis")
+  var yAxisGroup1 = d3.select("#svg1")//.selectAll("g")
+  .select("#yAxis1")
   //.select("g")
-  .attr("transform", "translate(50,50)").call(yAxis)
+  .attr("transform", "translate(50,50)").call(yAxis1)
   
   
   
@@ -612,23 +521,23 @@ d3.select("#info").remove()
     
     
     
-      var newXScale = d3.event.transform.rescaleX(x)
-      var newYScale = d3.event.transform.rescaleY(y)
+      var newXScale1 = d3.event.transform.rescaleX(x1)
+      var newYScale1 = d3.event.transform.rescaleY(y1)
       
       var newAnnotationScale = d3.event.transform.rescaleX(textSize)
  
       
       
-      scaleX2 = newXScale;             ///////////////      for  ZOOM  in  CHECKBOX  Click
-      scaleY2 = newYScale;             ///////////////     for  ZOOM  in  CHECKBOX  Click
+      scaleX2 = newXScale1;             ///////////////      for  ZOOM  in  CHECKBOX  Click
+      scaleY2 = newYScale1;             ///////////////     for  ZOOM  in  CHECKBOX  Click
     
     
-xAxis.scale(newXScale)
- yAxis.scale(newYScale)
+xAxis1.scale(newXScale1)
+ yAxis1.scale(newYScale1)
       
     
-    xAxisGroup.call(xAxis)
-    yAxisGroup.call(yAxis)
+    xAxisGroup1.call(xAxis1)
+    yAxisGroup1.call(yAxis1)
     
     
     
@@ -645,10 +554,10 @@ xAxis.scale(newXScale)
     
     
    
-        d3.select("svg")
+        d3.select("#svg1")
       .selectAll("#textLabel")
-     .attr("x", function(d){return newXScale(d.CityMPG)})
-      .attr("y", function(d){return newYScale(d.HwyMPG) + 13})
+     .attr("x", function(d){return newXScale1(d.CityMPG)})
+      .attr("y", function(d){return newYScale1(d.HwyMPG) + 13})
     
     .attr("fill", "grey")//.attr("stroke", "grey")
   .attr("font-size", 12); // newAnnotationScale(2));
@@ -659,9 +568,10 @@ xAxis.scale(newXScale)
     
     
     
-    d3.select("svg").selectAll("circle")//.merge(newelements)
-    .attr("cx", function(d){return newXScale(d.CityMPG)})
-    .attr("cy", function(d){return newYScale(d.HwyMPG)})
+    d3.select("#svg1").selectAll("circle")//.merge(newelements)
+    .attr("cx", function(d){return newXScale1(d.CityMPG)})
+    .attr("cy", function(d){return newYScale1(d.HwyMPG)})
+    .style("opacity", 0.65)
  
     
     
@@ -712,7 +622,7 @@ xAxis.scale(newXScale)
     
   
         
-    d3.select("svg")
+    d3.select("#svg1")
   .append("g").attr("transform", "translate(50, 50)")
   //.selectAll('rect').data([4,8,15,16,23,42]).enter()
   .append("rect")
@@ -840,7 +750,7 @@ d3.select("svg")
   .attr("x", 15).attr("y", 15)
   .attr("height", 30).attr("width", 30)
   .attr("rx", 5).attr("ry", 35)
-  .attr("fill", "red");
+  .attr("fill", "green");
   
   
  /////////////////////////------------------------LABELS-------------------------------------------- 
@@ -851,7 +761,7 @@ d3.select("svg")
   .text("2017 Vehicle Data")
   //.text(d3.extent(data.CityMPG))
   //.text(data.CityMPG)
-  .attr("x", 200).attr("y", 30)
+  .attr("x", svgWidth / 2).attr("y", 30)
   .attr("text-anchor", "middle")
   .attr("fill", "orange").attr("stroke", "grey")
   .attr("font-size", 25);
@@ -865,19 +775,19 @@ d3.select("svg")
   
   .attr("transform", "rotate(-90)")
   
-  .attr("x", -200).attr("y", 20)
+  .attr("x", -(svgHeight / 2) ).attr("y", 20)
   .attr("text-anchor", "middle")
   .attr("fill", "black")//.attr("stroke", "black")
-  .attr("font-size", 15);
+  .attr("font-size", 20);
   
   
 d3.select("svg")
   .append("text")
   .text("City MPG")
-  .attr("x", 200).attr("y", 385)
+  .attr("x", svgWidth / 2 ).attr("y", svgHeight - 20)
   .attr("text-anchor", "middle")
   .attr("fill", "black")//.attr("stroke", "black")
-  .attr("font-size", 15);
+  .attr("font-size", 20);
   
 
 
@@ -907,7 +817,7 @@ openYear = function(year){             /////////////////////////////////////
    d3.select("svg")
   .select("#title")
   .text(year + "  Vehicle Data")
-  .attr("x", 200).attr("y", 30)
+  .attr("x", svgWidth / 2).attr("y", 30)
   .attr("text-anchor", "middle")
   .attr("fill", "orange").attr("stroke", "grey")
   .attr("font-size", 25);
@@ -924,10 +834,364 @@ openYear = function(year){             /////////////////////////////////////
   update1();                     ////////////    APPEND  NEW circles  in a  circle - FREE  CLEAN  sheet
   
   
+
+  
+ /////////////////////////////////////////////////////   SVG 2   YEAR---------------------------
+
+  d3.select("#svg2")
+  .select("#title2")
+  .text(year + "  Model Count by Brand")
+  .attr("x", 200).attr("y", 30)
+  .attr("text-anchor", "middle")
+  .attr("fill", "orange").attr("stroke", "grey")
+  .attr("font-size", 25);
+  
+  
+  data2 = eval('data' + year + '2');                ////////////     DYNAMIC  Varibles  ,  use   EVAL ( )
+        //  window['data' + year];     ///  NOT  Working !!  ONLY  for  ASSIGNMENT ??  NOT  REtrival ??
+  
+  d3.select("#svg2").selectAll("rect").remove()          /////////   REMOVE  EXISTing  circles,  
+                                                       /////////  or will  append new to old
+  
+  d3.select("#svg2").selectAll("#textLabel").remove()
+  
+  update2();
+  
 }
   
 
  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  //////////////////////   ---------------------------     SVG 2 ,   ChartSvg  -----------------------
+  
+  
+ 
+  
+    var x2 = //d3.scaleLinear().domain([10, 200])
+    d3.scaleBand().domain(data2.map(function(d) {return d.Make; }))
+.range([0,300])
+//.padding(0.2);        ///////////   for  ZOOM  original
+  
+//var x = d3.scaleSymlog().domain([150,10]).range([0, 200]);
+//var x = d3.scaleLog().domain([10,150]).range([200, 0]);
+                                /////     range([200, 0]), reversed
+  
+  
+  
+  
+  
+  
+var y2 = d3.scaleLinear().domain([0, d3.max(data2, d => +d.NumOfModel)])//.domain([10, 150])//d3.extent(data, function(d) { return d.HwyMPG; }))
+                          ////////////////      +     SIGN  :   change  STRing  to  NUMERIC
+.range([300, 0])
+.nice()                ////    CUTOFF  VALUE  is  a  WHOLE
+;      ////////////   for  ZOOM  in  original
+//var y = d3.scaleLog().domain([10,150]).range([0, 200]);
+  
+  
+  
+
+  
+   ///////////////--------------------------AXIS--------------------------------------------------
+  
+  
+  
+
+//d3.select("body").selectAll("p").data(data).enter().append("p").html(function(d,i) {return d.Make + d.Fuel + d.AverageCityMPG});
+
+
+d3.select("#svg2")
+.append("g")
+.attr("id", "xAxis2")
+  .attr("transform", "translate(50,350)")
+.call(d3.axisBottom(x2).ticks()//tickValues([10,20,50,100])    //////   .tickValues([,])  is IN  CALL()  After axisLeft()
+//.tickFormat(d3.format(""))             #####    NO Working  for  NON - NUMERIC
+)  
+  
+        d3.select("#svg2").selectAll("text")  
+    .style("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em")
+    .attr("transform", "rotate(-65)")
+  .attr("font-size", 10)
+//////////   tickFormat(d3.format(""))  show  Numbers , NOT  1 + e 1
+             
+
+  
+  
+
+d3.select("#svg2")
+.append("g").
+attr("id", "yAxis2")
+  .attr("transform", "translate(50,50)")
+.call(d3.axisLeft(y2)
+      .ticks()
+      
+.tickSize(-300)             ///////////// -----------------    BENCH Mark  BAR s  ---------- 
+
+      
+      
+//.tickValues([10,20,50,100]).tickFormat(d3.format(""))
+)
+  
+.selectAll(".tick line").attr("stroke", "grey")   //////  ---------   BANCH  MARK  LINE ,  COLOR
+;
+
+  
+  
+     //////////////////--------------------------TOOLTIP------------------------------------
+    
+d3.select('body')
+  .select("#svg2")
+//d3.select('svg')
+.append('div')
+.attr('id', 'tooltip2')
+.attr("class", "tooltip2")    /////////// 
+//.style('left', 'py')
+//.style('top', 'px')
+.attr('style', 'position: absolute')//; opacity: 1;')  /// to show on SVG
+  ;
+  
+  
+  
+  
+    
+ ///////------------------------------------RECT---------------------------------------- 
+  
+     d3.select("#svg2")
+  .append("g").attr("transform", "translate(50, 50)")
+  //.selectAll('rect').data([4,8,15,16,23,42]).enter()
+  .append("rect")
+  .attr("class", "tooltip-container")  //////////////////
+  .attr("x", 15).attr("y", 15)
+  .attr("height", 30).attr("width", 30)
+  .attr("rx", 5).attr("ry", 35)
+  .attr("fill", "black");
+    
+  
+  
+  
+  
+   
+ /////////////////////////------------------------LABELS-------------------------------------------- 
+  
+d3.select("#svg2")
+  .append("text")
+  .attr("id", "title2")
+  .text("2017 Model Count by Brand")
+  //.text(d3.extent(data.CityMPG))
+  //.text(data.CityMPG)
+  .attr("x", 200).attr("y", 30)
+  .attr("text-anchor", "middle")
+  .attr("fill", "orange").attr("stroke", "grey")
+  .attr("font-size", 25);
+  
+  
+
+  
+d3.select("#svg2")
+  .append("text")
+  .text("Number of Models")
+  
+  .attr("transform", "rotate(-90)")
+  
+  .attr("x", -200).attr("y", 20)
+  .attr("text-anchor", "middle")
+  .attr("fill", "black")//.attr("stroke", "black")
+  .attr("font-size", 15);
+  
+  
+d3.select("#svg2")
+  .append("text")
+  .text(data.Model)           ///////////////////////////////////////////////////////////////////
+  .attr("x", 200).attr("y", 385)
+  .attr("text-anchor", "middle")
+  .attr("fill", "black")//.attr("stroke", "black")
+  .attr("font-size", 15);
+  
+  
+  
+  
+  function update2(){
+  
+   
+//  d3.select("svg").call(zoom)   //////////////////////   ???????????????
+  
+  
+  /////////////////////----------------------------------------------------------------
+  
+  
+  d3.selectAll(".checkbox")
+    .each(function(d){
+    
+       cb = d3.select(this);
+       //grp = cb.property("value");
+    
+       
+       newData2 = data2.filter(function(d){return d.Region == cb.property("id")})
+
+    
+       if (cb.property("checked") ){
+         
+         
+         
+
+         
+         d3.select("#svg2")
+.append("g")
+.attr("transform", "translate(50,50)")
+         
+.selectAll("rect").data(newData2).enter().append("rect")
+//.transition().duration(2000)
+
+.attr("class", function(d) {return d.Region;})
+                   ////////  CLASS  for  SELECTION , in REMOVE 
+   
+         ///////////    .selectAll("\." + cb.property("id"))
+
+         
+//.attr("cx", function(d){return newXScale(d.CityMPG)})
+//.attr("cy", function(d){return newYScale(d.HwyMPG)})
+
+
+         
+         
+.attr("x", function(d){return x2(d.Make);})//function(d, i) {return i * 10;})      /////////   for  ZOOM  in  CHECKBOX  Click
+// .attr("x", function(d) {return scaleX2(d.Manufacturer); })  
+         ///  CX & y: big to small,  CY & x : small to big
+.attr("y", function(d){return y2(d.NumOfModel);} )//function(d, i) {return d.HwyMPG;})      //////////   for  ZOOM  in  CHECKBOX  Click
+                       ///  CX & y: big to small,  CY & x : small to big
+  
+.attr("width", x2.bandwidth())       /////      function(d, i) {return Number(d.Cyl) * 2;})
+               //////////////  ----------------------    . BANDWIDTH()    auto calculated         
+//.attr("width", 10)//scaleX2(5))         
+         
+///.attr("r", function(d, i) {return Number(d.Cyl) + 2.0;});
+                     /////////    PARSEINT ( )  or   Number ( )
+  
+.attr("height", function(d, i){return 300 - y2(d.NumOfModel);})
+       /////////////////////    RETURN   a  FUNCTION
+         
+.style("fill", function(d){return set_color(d.Region)})      
+         
+         
+         
+  
+  
+  .on('mouseover', function(d) {
+  d3.select('#tooltip').       /////  Select('#TOOLTIP')   :  TEXT
+style('opacity', 1)
+  .text(d.Make + " : " + d.NumOfModel + " models")
+
+    .style("font-size", 13)
+  .style("left",(event.pageX + 10)).style("top",(event.pageY + 10))
+   .style("background", "white")        ////////////
+   .style("border-radius", "18")
+  .style("border", "solid")
+    .style("border-width", 1.5)
+  
+ d3.select(this)             /////  Select(THIS)   :    CIRCLE
+      .style("stroke", "black").style("fill", "white")
+})
+.on('mouseout', function(d) {
+  d3.select('#tooltip').style('opacity', 0).text("")
+  d3.select(this)//.style('opacity', 1)
+      .style("fill", function(d){return set_color(d.Region)})//.text(d.Make + " " + d.Model)
+})
+//.on('mousemove', function(d) {d3.select('#tooltip').transition().duration(200).style('opacity', 1).text("B")})
+
+.on("click", function () {
+  window.open("new.html")
+})  
+
+
+         
+         
+         
+////////////////////////////////////////------------------------- POINT LABEL ---------------------------------------
+         
+
+d3.select("#svg2")
+.append("g").attr("transform", "translate(50,50)")
+.selectAll("text").data(newData2).enter()
+.append("text").text(function(d){return d.NumOfModel;})
+
+.attr("class", function(d) {return d.Region;})         ////////  CLASS  for  SELECTION , in REMOVE 
+                ///////////    .selectAll("circle." + cb.property("id"))
+         
+.attr("id", "textLabel")                         //////////////      for  RESIZE  SELECTION  in  ZOOM
+         
+//     .attr("x", 100)//function(d, i){return i * 10})
+//      .attr("y", 100)//function(d){return 400 - d.HwyMPG + 20;})
+               
+
+.attr("x", function(d){return x2(d.Make);})                  
+.attr("y", function(d){return y2(d.NumOfModel) - 10;})
+  
+         
+  //.attr("text-anchor", "middle")
+  //.attr("font-color", "grey")//.attr("stroke", "grey")
+         
+  //.attr("transform", "rotate(90)")      //////////   WRONG ,   ROTATE  entire  as  a  ROW     
+
+  .attr("fill", "black")
+  .attr("font-size", 12);
+     
+         
+                     //////////////      for  RESIZE  SELECTION  in  ZOOM
+ 
+
+         
+         
+         
+         
+         
+         
+}
+    
+    else
+      
+    {
+        d3.select("#svg2").selectAll("rect." + cb.property("id")).remove(); 
+        d3.select("#svg2").selectAll("text." + cb.property("id")).remove();
+         /////////////   .selectAll("circle." + cb.property("id"))   ,  by CLASS 
+    }
+    
+   // d3.select("svg").call(zoom)   //////////////////////   ???????????????
+  
+  })
+    
+}
+
+      
+  
+  d3.selectAll(".checkbox").on("change",update2);
+  
+  update2();    /////////  so when page is loaded, CIRCLES SHOW as Box CHECKed
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    //////////////////////   ---------------------------     SVG 2 ,   ChartSvg  -----------------------
+  
+  
   
   
   
