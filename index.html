@@ -66,45 +66,55 @@ async function init() {
   var svg_1 = d3.select("body").append("svg").attr("id", "svg1").attr("x", 0).attr("y", 0).attr("height", svgHeight)
   .attr("width", svgWidth).style("background-color", "lightblue")
   
+    var svg_3 = d3.select("body").append("svg").attr("id", "svg3").attr("x", 0).attr("y", 0).attr("height", svgHeight)
+  .attr("width", 200).style("background-color", "lightblue")
+  
   var svg_2 = d3.select("body").append("svg").attr("id", "svg2").attr("x", 400).attr("y", 0).attr("height", svgHeight2)
   .attr("width", svgWidth2).style("background-color", "lightblue")
+  
+
   
   
   /////////////////////////// -----------------------------  TEXT  BOX  -------------------------------
            
            
-  d3.select("#svg1").append("g")//.attr("id", "textBoxG").attr("transform", "translate(450, 0)")
+  d3.select("#svg3").append("g")//.attr("id", "textBoxG").attr("transform", "translate(450, 0)")
    
   //var textBoxG = d3.select("#textBoxG")
   
   
   .append("rect").attr("id", "#textBox")
-  .attr("x", svgWidth - 160).attr("y", 0)
-  .attr("height", 200).attr("width", 130)
-  //.attr("rx", 5).attr("ry", 35)
-  .attr("fill", "pink")
+  //.attr("x", svgWidth - 160).attr("y", 0)
+  .attr("x", 0).attr("y", 50)
+  .attr("height", 300).attr("width", 180)
+  .attr("rx", 25).attr("ry", 35)
+  .attr("fill", "white")
   .style("opacity", 1)
   //.append("text").text("WHAY").attr("fill", "black");   NOT  WORKing,  WON'T  Work
    
   
   
-   d3.select("#svg1")
+   d3.select("#svg3")
    //textBoxG
-    //.attr("transform", "translate(50, 10)")
-
-  .append("text").text("Model Detail")
-    //.attr("transform", "translate(450, 0)")
-    .attr("x", svgWidth - 100).attr("y", 20)
+  //  .attr("transform", "translate(10, 10)")
+.append("g").attr("transform", "translate(90, 75)")
+  .append("text").text("Model Details")
+     //.attr("transform", "translate(10, 0)")
+    //.attr("x", 75).attr("y", 45)
     .style("fill", "black")
-   .attr("text-anchor", "middle");
+   .attr("text-anchor", "middle")
            
-    d3.select("#svg1")
+//    d3.select("#svg3")
     //textBoxG
     //.attr("transform", "translate(50, 10)")
-
-  .append("text").text("-----------------")
-    //.attr("transform", "translate(450, 0)")
-    .attr("x", svgWidth - 100).attr("y", 35)
+  
+   d3.select("#svg3")
+   //textBoxG
+  //  .attr("transform", "translate(10, 10)")
+.append("g").attr("transform", "translate(100, 75)")
+  .append("text").text("--------------------------")
+    //.attr("transform", "translate(0, 0)")
+    .attr("x", 0).attr("y", 20)
     .style("fill", "black")
    .attr("text-anchor", "middle");
            
@@ -229,13 +239,7 @@ d3.select('body')
   
   
   
-  d3.select("#svg1")
-    .append("g").attr("transform", "translate(50, 10)")
-  .append("text").text("WYF")
-    .attr("x", 30).attr("y", 30)
-    .attr("fill", "white")
-   .attr("text-anchor", "middle");
-    
+
   
 ////////////////////////
 
@@ -375,36 +379,63 @@ d3.select("#svg1")
            
            
   
-  d3.select("#svg1")
-  //.append("g")
-    //.attr("transform", "translate(50, 10)")
+  d3.select("#svg3")
+  .append("g")
+  .attr("transform", "translate(10, 120)")
      
   .append("text")
            
   .attr("dy", "0em") 
            
   .text(d.Make + " " + d.Model)    ///////  this is  INSIDE  a  function , D is already  DECLAREd          
-  .attr("x", 300).attr("y", 50)
+  .attr("x", 0).attr("y", 0)
            
-           .attr("font-size", 10)           //////----------   CONTROLS  ALL
+           .attr("font-size", 15)           //////----------   CONTROLS  ALL
             .attr("id", "info")
             .style("fill", "black")
             .attr("text-anchor", "left")
    
-           
-  .append("tspan")           ////////////////    TSPAN     different  lineS
-  .attr("dy", "3em") 
-  .text("City MPG: " + d.CityMPG)
-  .attr("x", 300).attr("y", 50)
-           
        
   .append("tspan")
-  .attr("dy", "1.5em") 
+  .attr("dy", "3em") 
   .text("Hwy MPG :" + d.HwyMPG)
   //.attr("id", "info")
-   .attr("x", 300).attr("y", 50)
+   .attr("x", 0).attr("y", 0)
+  
+  
+  .append("tspan")           ////////////////    TSPAN     different  lineS
+  .attr("dy", "1.5em") 
+  .text("City MPG : " + d.CityMPG)
+  .attr("x", 0).attr("y", 0)
            
            
+  .append("tspan")
+  .attr("dy", "4.5em") 
+  .text("Cylinders :" + d.Cyl)
+  //.attr("id", "info")
+   .attr("x", 0).attr("y", 0)
+  
+         
+  .append("tspan")
+  .attr("dy", "6em") 
+  .text("Drive :" + d.Drive)
+  //.attr("id", "info")
+   .attr("x", 0).attr("y", 0)
+  
+    .append("tspan")
+  .attr("dy", "7.5em") 
+  .text("Fuel :" + d.Fuel)
+  //.attr("id", "info")
+   .attr("x", 0).attr("y", 0)
+  
+      .append("tspan")
+  .attr("dy", "9em") 
+  .text(d.VehClass)
+  //.attr("id", "info")
+   .attr("x", 0).attr("y", 0)
+  
+  
+  
            
            
   d3.select('#tooltip').       /////  Select('#TOOLTIP')   :  TEXT
@@ -417,7 +448,7 @@ style('opacity', 1)
  */
     
 
-    .style("font-size", 10)
+    .style("font-size", 15)
   .style("left",(event.pageX + 10)).style("top",(event.pageY + 10))
    .style("background", "white")        ////////////
    .style("border-radius", "18")
@@ -924,7 +955,7 @@ attr("id", "yAxis2")
 //.tickValues([10,20,50,100]).tickFormat(d3.format(""))
 )
   
-.selectAll(".tick line").attr("stroke", "grey")   //////  ---------   BANCH  MARK  LINE ,  COLOR
+.selectAll(".tick line").attr("stroke", "lightblue")   //////  ---------   BANCH  MARK  LINE ,  COLOR
 ;
 
   
