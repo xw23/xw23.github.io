@@ -5,20 +5,25 @@
   <link rel="stylesheet" type="text/css" href="pointLabel.css">
 <body onload="init()">
   
-<p>
+<div id="checkBoxDiv">
 
+  <p>
   <input class = "checkbox" type="checkbox" id="American" name="regions"  style="width:20;height:20; background-color:blue;" value="American" checked/> 
   <label for="American" style="background-color:blue; font-size:20; color:white;">American</label>
-
-
+</p>
+  
+<p>
     <input type="checkbox" class = "checkbox" id="Asian" name="regions" style="width:20;height:20; background-color:yellow;" value="Asian" />
   <label for="Asian" style="background-color:yellow;font-size:20; color:blue;">Asian</label>
-
+</p>
+  
+  <p>
   <label style="background-color:red;"></label>
   <input type="checkbox" class = "checkbox" id="European" name="regions" style="width:20;height:20; background-color:red;" value="European" checked />
   <label for ="European" style="background-color:red; font-size:20; color:white;">European</label>
- 
-</p>
+ </p>
+  
+</div>
   <label style="background-color:white;"></label>
   
 <!--  <svg id="svg1" width="400" height="400" x="0" y="0" style="background-color:lightblue">   -->
@@ -53,6 +58,7 @@ async function init() {
   
   
   
+  
   //<svg id="svg1" width="400" height="400" x="0" y="0" style="background-color:lightblue"> 
     
   const svgWidth = 600
@@ -64,13 +70,13 @@ async function init() {
   const margin  = 50
     
   var svg_1 = d3.select("body").append("svg").attr("id", "svg1").attr("x", 0).attr("y", 0).attr("height", svgHeight)
-  .attr("width", svgWidth).style("background-color", "lightblue")
+  .attr("width", svgWidth).style("background-color", "#F0F8FF")
   
     var svg_3 = d3.select("body").append("svg").attr("id", "svg3").attr("x", 0).attr("y", 0).attr("height", svgHeight)
-  .attr("width", 200).style("background-color", "lightblue")
+  .attr("width", 200).style("background-color", "#F0F8FF")
   
-  var svg_2 = d3.select("body").append("svg").attr("id", "svg2").attr("x", 400).attr("y", 0).attr("height", svgHeight2)
-  .attr("width", svgWidth2).style("background-color", "lightblue")
+  var svg_2 = d3.select("body").append("svg").attr("id", "svg2").attr("x", 400).attr("y", 0).attr("height", svgHeight2 + 100)
+  .attr("width", svgWidth2).style("background-color", "#F0F8FF")
   
 
   
@@ -78,17 +84,18 @@ async function init() {
   /////////////////////////// -----------------------------  TEXT  BOX  -------------------------------
            
            
-  d3.select("#svg3").append("g")//.attr("id", "textBoxG").attr("transform", "translate(450, 0)")
+  d3.select("#svg3").append("g")//.attr("id", "textBoxG")
+    .attr("transform", "translate(0, 230)")
    
   //var textBoxG = d3.select("#textBoxG")
   
   
   .append("rect").attr("id", "#textBox")
   //.attr("x", svgWidth - 160).attr("y", 0)
-  .attr("x", 0).attr("y", 50)
+  .attr("x", 0).attr("y", 0)
   .attr("height", 300).attr("width", 180)
   .attr("rx", 25).attr("ry", 35)
-  .attr("fill", "white")
+  .attr("fill", "lightgrey")
   .style("opacity", 1)
   //.append("text").text("WHAY").attr("fill", "black");   NOT  WORKing,  WON'T  Work
    
@@ -97,7 +104,7 @@ async function init() {
    d3.select("#svg3")
    //textBoxG
   //  .attr("transform", "translate(10, 10)")
-.append("g").attr("transform", "translate(90, 75)")
+.append("g").attr("transform", "translate(90, 260)")
   .append("text").text("Model Details")
      //.attr("transform", "translate(10, 0)")
     //.attr("x", 75).attr("y", 45)
@@ -111,10 +118,10 @@ async function init() {
    d3.select("#svg3")
    //textBoxG
   //  .attr("transform", "translate(10, 10)")
-.append("g").attr("transform", "translate(100, 75)")
+.append("g").attr("transform", "translate(100, 275)")
   .append("text").text("--------------------------")
     //.attr("transform", "translate(0, 0)")
-    .attr("x", 0).attr("y", 20)
+    .attr("x", 0).attr("y", 0)
     .style("fill", "black")
    .attr("text-anchor", "middle");
            
@@ -136,8 +143,8 @@ var data = data2017;
   
   //var data = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/cleaned_2017.csv");
 var data20172 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/BAR_2017.csv");
-var data20182 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/cleaned_2018.csv");
-var data20192 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/cleaned_2019.csv");
+var data20182 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/BAR_2018.csv");
+var data20192 = await d3.csv("https://raw.githubusercontent.com/xw23/projectcsv/master/BAR_2019.csv");
   
 
 
@@ -206,7 +213,7 @@ d3.select("#svg1")
       .tickSize(-500)
 )
 
-d3.selectAll(".tick line").attr("stroke", "grey")   //////  ---------   BANCH  MARK  LINE ,  COLOR
+d3.selectAll(".tick line").attr("stroke", "#D3D3D3")   //////  ---------   BANCH  MARK  LINE ,  COLOR
 
   
   
@@ -226,7 +233,7 @@ d3.select('body')
   
   
  ///////------------------------------------RECT---------------------------------------- 
-  
+/*  
   d3.select("#svg1")
   .append("g").attr("transform", "translate(50, 10)")
   //.selectAll('rect').data([4,8,15,16,23,42]).enter()
@@ -237,7 +244,7 @@ d3.select('body')
   .attr("rx", 5).attr("ry", 35)
   .attr("fill", "black");
   
-  
+ */ 
   
 
   
@@ -381,7 +388,7 @@ d3.select("#svg1")
   
   d3.select("#svg3")
   .append("g")
-  .attr("transform", "translate(10, 120)")
+  .attr("transform", "translate(10, 300)")
      
   .append("text")
            
@@ -449,11 +456,13 @@ style('opacity', 1)
     
 
     .style("font-size", 15)
-  .style("left",(event.pageX + 10)).style("top",(event.pageY + 10))
+  .style("left",(event.pageX / 2))     ////////   to  CENTER
+    .style("top",(event.pageY + 10))
    .style("background", "white")        ////////////
    .style("border-radius", "18")
   .style("border", "solid")
     .style("border-width", 1.5)
+  //.style("text-anchor", "middle")   ////  NOT WORKING
           
            
            
@@ -471,9 +480,25 @@ style('opacity', 1)
 .on('mouseout', function(d) {
   d3.select('#tooltip').style('opacity', 0).text("")
   d3.select(this)//.style('opacity', 1)
-      .style("fill", function(d){return set_color(d.Region)})//.text(d.Make + " " + d.Model)
+      // .style("fill", function(d){return set_color(d.Region)})//.text(d.Make + " " + d.Model)
            
            
+  .style("fill", function(d){
+           if (d.Drive == "2WD") {return set_color(d.Region)}
+         else {return "grey"}}
+      )
+
+.style("stroke", function(d){
+           if (d.Drive == "2WD") {return "black"}
+           else {return set_color(d.Region)}})
+           
+.style("stroke-width", function(d){
+           if (d.Drive == "2WD"){return 1.5}
+           else {return 3.5}
+         })
+          
+         
+.style("opacity", 0.65)
            
     /////////////////////////// -----------------------------  TEXT  BOX  -------------------------------
 
@@ -487,10 +512,11 @@ d3.select("#info").remove()
               
 })
 //.on('mousemove', function(d) {d3.select('#tooltip').transition().duration(200).style('opacity', 1).text("B")})
-
+/*
 .on("click", function () {
   window.open("new.html")
 })  
+*/
          
 
 }           
@@ -632,26 +658,7 @@ xAxis1.scale(newXScale1)
     
     
     
-  
-    
-    
-    
-    
-    
-    
-        
-    d3.select("#svg1")
-  .append("g").attr("transform", "translate(50, 50)")
-  //.selectAll('rect').data([4,8,15,16,23,42]).enter()
-  .append("rect")
-  .attr("class", "tooltip-container")  //////////////////
-  .attr("x", 15).attr("y", 15)
-  .attr("height", 30).attr("width", 30)
-  .attr("rx", 5).attr("ry", 35)
-  .attr("fill", "black");
-    
-    
-    
+
     
     
     //////////////////// -----------------   see  UPDATE 3 ---------------
@@ -734,16 +741,7 @@ xAxis.scale(newXScale)
    //   newXScale = t.rescaleX()
     
   
-        
-    d3.select("svg")
-  .append("g").attr("transform", "translate(50, 50)")
-  //.selectAll('rect').data([4,8,15,16,23,42]).enter()
-  .append("rect")
-  .attr("class", "tooltip-container")  //////////////////
-  .attr("x", 15).attr("y", 15)
-  .attr("height", 30).attr("width", 30)
-  .attr("rx", 5).attr("ry", 35)
-  .attr("fill", "black");
+
     
     
 
@@ -759,24 +757,7 @@ xAxis.scale(newXScale)
   
 
   
-  
-  
- 
-  
-///////////////// ----------------------------RECT---------------------------------------  
-  
-  
-  
-d3.select("svg")
-  .append("g").attr("transform", "translate(50, 50)")
-  //.selectAll('rect').data([4,8,15,16,23,42]).enter()
-  .append("rect")
-  .attr("class", "tooltip-container")  //////////////////
-  .attr("x", 15).attr("y", 15)
-  .attr("height", 30).attr("width", 30)
-  .attr("rx", 5).attr("ry", 35)
-  .attr("fill", "green");
-  
+
   
  /////////////////////////------------------------LABELS-------------------------------------------- 
   
@@ -858,7 +839,7 @@ openYear = function(year){             /////////////////////////////////////
   
   //update1();                     ////////////    APPEND  NEW circles  in a  circle - FREE  CLEAN  sheet
   
-  update3();
+   ///  update3();             /////////////////   ----------------  NOT  WORKING  ,   WHY  ????????
 
   
  /////////////////////////////////////////////////////   SVG 2   YEAR---------------------------
@@ -880,7 +861,12 @@ openYear = function(year){             /////////////////////////////////////
   
   d3.select("#svg2").selectAll("#textLabel").remove()
   
+  
   //update2();
+  
+  
+     //////////////////// -----------------   see  UPDATE 3 ---------------
+  update3();
   
 }
   
@@ -990,23 +976,7 @@ d3.select('body')
   
   
   
-  
-    
- ///////------------------------------------RECT---------------------------------------- 
-  
-     d3.select("#svg2")
-  .append("g").attr("transform", "translate(50, 50)")
-  //.selectAll('rect').data([4,8,15,16,23,42]).enter()
-  .append("rect")
-  .attr("class", "tooltip-container")  //////////////////
-  .attr("x", 15).attr("y", 15)
-  .attr("height", 30).attr("width", 30)
-  .attr("rx", 5).attr("ry", 35)
-  .attr("fill", "black");
-    
-  
-  
-  
+
   
    
  /////////////////////////------------------------LABELS-------------------------------------------- 
@@ -1036,18 +1006,7 @@ d3.select("#svg2")
   .attr("fill", "black")//.attr("stroke", "black")
   .attr("font-size", 20);
   
-  
-  /*
-d3.select("#svg2")
-  .append("text")
-  .text(data.Model)           ///////////////////////////////////////////////////////////////////
-  .attr("x", 200).attr("y", 385)
-  .attr("text-anchor", "middle")
-  .attr("fill", "black")//.attr("stroke", "black")
-  .attr("font-size", 15);
-  
-  */
-  
+
   
   
   
@@ -1132,6 +1091,9 @@ style('opacity', 1)
  d3.select(this)             /////  Select(THIS)   :    CIRCLE
       .style("stroke", "black").style("fill", "white")
 })
+
+
+
 .on('mouseout', function(d) {
   d3.select('#tooltip').style('opacity', 0).text("")
   d3.select(this)//.style('opacity', 1)
@@ -1139,9 +1101,12 @@ style('opacity', 1)
 })
 //.on('mousemove', function(d) {d3.select('#tooltip').transition().duration(200).style('opacity', 1).text("B")})
 
+         
+/*
 .on("click", function () {
   window.open("new.html")
-})  
+}) 
+*/
 
 
          
@@ -1237,3 +1202,5 @@ d3.select("#svg2")
 </script>
 </body>
 </html>
+
+
