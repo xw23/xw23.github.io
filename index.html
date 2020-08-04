@@ -405,6 +405,10 @@ d3.selectAll("checkbox").style("hight", "100")  //style("background-color", "red
 ///////////////////////////   -----------------------------   UPDATE  1 --------------------------------------  
 
   
+var checkedColors = [];            //////////////////////////////////////////////
+    
+  
+  
 function update1(){
   
    
@@ -430,7 +434,7 @@ function update1(){
          /////////////////////////////------------------------- POINT LABEL ---------------------------------------
          
 
-d3.select("#svg1")
+var circlePointLabel = d3.select("#svg1")
 .append("g").attr("transform", "translate(50,50)")
 .selectAll("text").data(newData).enter()
   .append("text").text(function(d){return d.Make})// + " " + d.Model})
@@ -440,7 +444,23 @@ d3.select("#svg1")
          
 .attr("id", "textLabel")                         //////////////      for  RESIZE  SELECTION  in  ZOOM
 
-
+         
+if (! checkedColors.includes(cb.property("id"))){
+         
+circlePointLabel.transition().duration(2200)
+         
+     .attr("x", function(d){return scaleX2(d.CityMPG);})
+      .attr("y", function(d){return scaleY2(d.HwyMPG) + 13;})
+  .attr("text-anchor", "middle")
+  //.attr("font-color", "grey")//.attr("stroke", "grey")
+  .attr("fill", "grey")
+  .attr("font-size", 12)
+//.attr("display", "on");
+  
+} 
+   else {
+     
+     circlePointLabel.transition().duration(0)
          
      .attr("x", function(d){return scaleX2(d.CityMPG);})
       .attr("y", function(d){return scaleY2(d.HwyMPG) + 13;})
@@ -450,6 +470,21 @@ d3.select("#svg1")
   .attr("font-size", 12)
 //.attr("display", "on");
      
+   }
+      
+         
+         
+/*            
+if (! checkedColors.includes(cb.property("id"))){
+           
+           checkedColors.push(cb.property("id"));
+           
+           console.log(cb.property("id"))
+         }
+         
+   */           
+         
+         
          
          
          
@@ -770,12 +805,34 @@ xAxis1.scale(newXScale1)
    
         d3.select("#svg1")
       .selectAll("#textLabel")
+    
+.transition().duration(0)           /////////////////////////////////////////////////////////
+         
      .attr("x", function(d){return newXScale1(d.CityMPG)})
       .attr("y", function(d){return newYScale1(d.HwyMPG) + 13})
     
     .attr("fill", "grey")//.attr("stroke", "grey")
   .attr("font-size", 12); // newAnnotationScale(2));
   
+    
+    
+    
+    
+    
+    d3.select("#svg2")
+.selectAll("#textLabel")
+ 
+.transition().duration(0)              ////////////////////////////////////////////////////////
+         
+
+.attr("x", function(d){return x2(d.Make);})                  
+.attr("y", function(d){return y2(d.NumOfModel) - 10;})
+  
+    
+    
+    
+    
+    //////////////////////////////////////
     
     
     
@@ -1143,6 +1200,14 @@ d3.select("#svg2")
   
   
   
+  
+  
+// var checkedColors = [];            //////////////////////////////////////////////
+  
+  
+  
+  ////////////// ----------------------------   UPDATE  2   ------------------------------------------------
+  
   function update2(){
   
    
@@ -1152,8 +1217,32 @@ d3.select("#svg2")
   /////////////////////----------------------------------------------------------------
   
   
-  d3.selectAll(".checkbox")
-    .each(function(d){
+  var boxes = d3.selectAll(".checkbox")
+  
+  
+/*
+  //for (box in boxes){
+    
+  boxes.each(d =>{
+    console.log("YEAH ? ")
+    cb1 = d3.select(this);
+    
+    
+    if (cb1.property("checked")){
+    
+      newData3 = data2.filter(function(d){return d.Region == cb.property("id")})
+      console.log(newData3)
+      console.log(cb1.property("id"))
+    }
+  })
+    
+  */
+  
+  
+    
+  
+  boxes.each(function(d){
+    
     
        cb = d3.select(this);
        //grp = cb.property("value");
@@ -1164,8 +1253,7 @@ d3.select("#svg2")
     
        if (cb.property("checked") ){
          
-         
-         
+                    
 
          
          d3.select("#svg2")
@@ -1248,7 +1336,7 @@ style('opacity', 1)
 ////////////////////////////////////////------------------------- POINT LABEL ---------------------------------------
          
 
-d3.select("#svg2")
+var barPointLabel = d3.select("#svg2")
 .append("g").attr("transform", "translate(50,50)")
 .selectAll("text").data(newData2).enter()
 .append("text").text(function(d){return d.NumOfModel;})
@@ -1260,7 +1348,17 @@ d3.select("#svg2")
          
 //     .attr("x", 100)//function(d, i){return i * 10})
 //      .attr("y", 100)//function(d){return 400 - d.HwyMPG + 20;})
-               
+   
+ 
+
+ 
+if ( ! checkedColors.includes(cb.property("id"))){
+  
+  console.log("1")
+  
+barPointLabel
+.transition().duration(2200)
+         
 
 .attr("x", function(d){return x2(d.Make);})                  
 .attr("y", function(d){return y2(d.NumOfModel) - 10;})
@@ -1272,18 +1370,45 @@ d3.select("#svg2")
   //.attr("transform", "rotate(90)")      //////////   WRONG ,   ROTATE  entire  as  a  ROW     
 
   .attr("fill", "black")
-  .attr("font-size", 12);
+  .attr("font-size", 12)
      
-         
+   
                      //////////////      for  RESIZE  SELECTION  in  ZOOM
- 
 
+} 
+    //if ( checkedBoxes.includes(cb)) 
+   else {
+      console.log("  NO  !!!!1 ")
+      
+      barPointLabel.transition().duration(0)
+  .attr("x", function(d){return x2(d.Make);})                  
+.attr("y", function(d){return y2(d.NumOfModel) - 10;})
+      
+      
+  .attr("fill", "black")
+  .attr("font-size", 12)
+  
+}
+  
          
+       
+if (! checkedColors.includes(cb.property("id"))){
+           
+           checkedColors.push(cb.property("id"));
+           
+           console.log(cb.property("id"))
+         }
+        
+        
          
+  //.attr("text-anchor", "middle")
+  //.attr("font-color", "grey")//.attr("stroke", "grey")
          
-         
-         
-         
+  //.attr("transform", "rotate(90)")      //////////   WRONG ,   ROTATE  entire  as  a  ROW     
+
+     
+   
+                     //////////////      for  RESIZE  SELECTION  in  ZOOM     
 }
     
     else
