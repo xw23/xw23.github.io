@@ -405,7 +405,9 @@ d3.selectAll("checkbox").style("hight", "100")  //style("background-color", "red
 ///////////////////////////   -----------------------------   UPDATE  1 --------------------------------------  
 
   
-var checkedColors = [];            //////////////////////////////////////////////
+var checkedColors = [];          ///////////   for  TRANSITION  effects  of  NEW  Selected  CHECKBOX   //////////////////
+   //////////////   Did  NOT   add  REMOVE  COLORs  from  the  ARRAY,  So  when a color  was  SELECTED   ONCE,
+  //////////       IF   RESELECT  it ,   NO   TRANSITTION   effect   any  more 
     
   
   
@@ -445,9 +447,16 @@ var circlePointLabel = d3.select("#svg1")
 .attr("id", "textLabel")                         //////////////      for  RESIZE  SELECTION  in  ZOOM
 
          
-if (! checkedColors.includes(cb.property("id"))){
+
+
+
+          ///////////////  -------------   cb.property("id")        added  COLOR  to  Array  of  CheckedBOXes  ------------
+
+
+if (! checkedColors.includes(cb.property("id"))){           ///////////////  -------------    added  COLOR  to  Array  of  CheckedBOXes  ------------
          
-circlePointLabel.transition().duration(2200)
+  
+circlePointLabel.transition().duration(2200)       /////////////////////////////
          
      .attr("x", function(d){return scaleX2(d.CityMPG);})
       .attr("y", function(d){return scaleY2(d.HwyMPG) + 13;})
@@ -458,9 +467,10 @@ circlePointLabel.transition().duration(2200)
 //.attr("display", "on");
   
 } 
+         
    else {
      
-     circlePointLabel.transition().duration(0)
+     circlePointLabel.transition().duration(0)          ////////////////////
          
      .attr("x", function(d){return scaleX2(d.CityMPG);})
       .attr("y", function(d){return scaleY2(d.HwyMPG) + 13;})
@@ -472,7 +482,12 @@ circlePointLabel.transition().duration(2200)
      
    }
       
+    
          
+         
+         
+////////////// --------------   ONLY  in UPDATE  2  ,  NOT  in  UPDATE  1  , because  order exctute in  UPDATE  3  --------------------------------
+      
          
 /*            
 if (! checkedColors.includes(cb.property("id"))){
@@ -1349,7 +1364,12 @@ var barPointLabel = d3.select("#svg2")
 //     .attr("x", 100)//function(d, i){return i * 10})
 //      .attr("y", 100)//function(d){return 400 - d.HwyMPG + 20;})
    
+
+
+
+
  
+  ///////////////  -------------   cb.property("id")        added  COLOR  to  Array  of  CheckedBOXes  ------------
 
  
 if ( ! checkedColors.includes(cb.property("id"))){
@@ -1357,7 +1377,7 @@ if ( ! checkedColors.includes(cb.property("id"))){
   console.log("1")
   
 barPointLabel
-.transition().duration(2200)
+.transition().duration(2200)           ////////////////////////////
          
 
 .attr("x", function(d){return x2(d.Make);})                  
@@ -1380,7 +1400,9 @@ barPointLabel
    else {
       console.log("  NO  !!!!1 ")
       
-      barPointLabel.transition().duration(0)
+      barPointLabel.transition().duration(0)             //////////////////////
+     
+     
   .attr("x", function(d){return x2(d.Make);})                  
 .attr("y", function(d){return y2(d.NumOfModel) - 10;})
       
@@ -1390,6 +1412,10 @@ barPointLabel
   
 }
   
+         
+         
+         
+////////////// --------------   ONLY  in UPDATE  2  ,  NOT  in  UPDATE  1  , because  order exctute in  UPDATE  3  --------------------------------
          
        
 if (! checkedColors.includes(cb.property("id"))){
